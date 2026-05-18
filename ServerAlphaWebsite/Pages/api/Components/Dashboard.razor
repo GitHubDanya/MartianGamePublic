@@ -1,0 +1,68 @@
+﻿@page "/api"
+
+<script src="js/cookieHelper.js"></script>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="width: 100vw;">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Research Center</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<NavLink class="nav-link">
+							<button class="btn btn-link nav-link" @onclick="DashboardNavButtonClick">Dashboard</button>
+						</NavLink>
+					</li>
+					<li class="nav-item">
+						<NavLink class="nav-link">
+							<button class="btn btn-link nav-link" @onclick="DownloadDataNavButtonClick">Download data</button>
+						</NavLink>
+					</li>
+					<li class="nav-item">
+						<NavLink class="nav-link">
+							<button class="btn btn-link nav-link" @onclick="DeleteDataNavButtonClick">Remove data</button>
+						</NavLink>
+					</li>
+					<li class="nav-item">
+						<NavLink class="nav-link">
+							<button class="btn btn-link nav-link" @onclick="LogOut">Log Out</button>
+						</NavLink>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div >
+		@{
+			if (loggedIn == true)
+			{
+				<div style="padding: 10px;">
+					@if(Page == "dashboard")
+					{
+						<DataDisplay></DataDisplay>
+					} else if (Page == "downloaddata")
+					{
+						<DataDownload></DataDownload>
+					}
+					else if (Page == "deletedata")
+					{
+						<p>null</p>
+					}
+				</div>
+
+
+			}
+			else if (loggedIn == false)
+			{
+				RedirectToLogin();
+			}
+			else
+			{
+				// Do nothing
+			}
+		}
+	</div>
+</body>

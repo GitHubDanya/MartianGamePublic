@@ -1,0 +1,105 @@
+﻿html, body {
+    background-color: rgb(36, 36, 36);
+    font-family: Helvetica, Arial, sans-serif;
+    color: rgb(245, 245, 245);
+    margin: 0;
+    overflow: hidden;
+}
+
+p {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: start;
+    display: block;
+    white-space: normal;
+    width: 100%
+}
+
+@media (max-width: 1200px) {
+    p {
+        font-size: 16px !important;
+    }
+    .container-div {
+        justify-content: flex-start !important;
+    }
+}
+
+.animate {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.slideOutUp {
+    animation-name: slideOutUp;
+    animation-timing-function: ease-in;
+}
+
+.slideInUp {
+    animation-name: slideInUp;
+    animation-timing-function: ease-out;
+}
+
+.fade-in {
+    animation-name: fade-in;
+    animation-timing-function: linear;
+}
+
+@keyframes slideOutUp {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-100vh);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100vh);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.container-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10vh 10vw 0;
+    height: 100vh;
+    max-height: 100vh;
+    width: 100vw;
+    gap: 10px;
+    overflow-y: auto;
+}
+
+.logo-div {
+    position: absolute;
+    height: 6vh;
+    width: 6vh;
+    margin: 30px;
+}
+
+.logo {
+    height: inherit;
+    width: inherit;
+}
+
+.button-div {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    height: fit-content;
+    width: 100%;
+    gap: 10px;
+}

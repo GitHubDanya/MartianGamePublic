@@ -1,0 +1,160 @@
+﻿@page "/game"
+@inject NavigationManager navigationManager;
+@inject IStringLocalizer<Resource> localizer
+
+@if (IsRtl)
+{
+	<style>
+		p, input {
+			direction: rtl !important;
+			text-align: right !important;
+		}
+
+		button {
+			direction: rtl !important;
+		}
+
+		quit-modal-button {
+			flex-direction: row-reverse
+		}
+	</style>
+}
+
+<script src="js/site.js"></script>
+
+<body>
+	<Modal @ref="quitConfirmationModal" Title="@localizer["GameConfirmationModalTitle"]" Style="color: #050505;">
+		<BodyTemplate>
+			@* You won't be able to ask any more questions during the design phase.
+			<br/>
+			Are you sure that you want to proceed to the design phase? *@
+			<p>@((MarkupString)(string)localizer["GameConfirmationModal"])</p>
+		</BodyTemplate>
+		<FooterTemplate>
+			<div class="quit-modal-button">
+				<Button Color="ButtonColor.Danger" @onclick="FinishGame">@localizer["GameConfirmationModalContinue"]</Button>
+				<Button Color="ButtonColor.Secondary" @onclick="OnHideQuitConfirmationModalClick">@localizer["GameConfirmationModalCancel"]</Button>
+			</div>
+		</FooterTemplate>
+	</Modal>
+
+	<Modal @ref="instructionModal" Title="@localizer["GameInformationModalTitle"]" Style="color: #050505;">
+		<BodyTemplate>
+			@* Your mission is to design a reliable and sustainable energy system for a city on Mars.<br/>To achieve this, you will interact with Mark,
+			an AI-powered agent who has the answers to all questions relevant to planning the energy system. Ask creative, analytical, and relevant questions,
+			and Mark will provide the information you need. You will earn points based on the quality of your questions, with relevance multiplying your score.<br/><br/>
+			Gather information by asking the agent as many questions as you like. After each question, you'll
+			receive feedback and earn points based on the quality and relevance of your inquiry. During the question phase, a short summary
+			of each question you ask will appear on the right side of the screen. When you are ready to plan the energy system,
+			click "Finish Asking" to proceed to the next phase. *@
+
+			<p>@((MarkupString)(string)localizer["GameInformationModal"])</p>
+		</BodyTemplate>
+		<FooterTemplate>
+			<Button Color="ButtonColor.Secondary" @onclick="OnHideInstructionModalClick">@localizer["GameInformationModalClose"]</Button>
+		</FooterTemplate>
+	</Modal>
+
+	@* <div class="border-div">
+		<div class="container-div">
+			<img class="logo-512" src="images/logo_text_1024_512.png" />
+			<p style="font-size: 24px; font-weight: bold;">Question-asking phase</p>
+			<div class="dynamic-content-container">
+				<div class="left-side">
+					<div class="output-div border-2px-white" id="chatBox">
+						<div style="flex-grow: 1; background-color: rgb(45, 45, 45);"></div>
+						<p style="margin: 0;">@((MarkupString)MessageBoxContent)</p>
+					</div>
+					<div class="input-div border-2px-white d-flex align-items-center">
+						<input autofocus="autofocus"
+							   @ref="InputRef"
+							   @bind="UserMessageInput"
+							   @bind:event="onchange"
+							   @bind:after="HandleInputKeyDown"
+							   disabled="@inputDisabled" />
+
+						@if (ChatThinking)
+						{
+								<button type="button" class="halt-button" @onclick="StopResponseButtonClick">
+								<img class="animate fadeIn" src="images/halt_button.png" />
+							</button>
+						}
+					</div>
+				</div>
+				<div class="right-side">
+					<div class="output-div right-side-output-div border-2px-white">
+						@((MarkupString)GeneralInformationBoxContent)
+					</div>
+					<div class="output-div right-side-score-div border-2px-white">
+						@scoreBoxContent
+					</div>
+				</div>
+			</div>
+			<div class="finish-button-container">
+				<button type="button" class="btn btn-light"
+						@onclick="ShowConfirmationModal">
+					Finish Asking
+				</button>
+			</div>
+		</div>
+	</div> *@
+
+	<div class="bg"></div>
+
+	<div class="container-div">
+		<div class="title-div">
+			<img class="logo-512" src="images/logo_text_1024_512.png" />
+			<div class="d-flex justify-content-between align-items-center gap-5 mb-3">
+				<p style="margin: 0;">@localizer["GamePhaseTitle"]</p>
+				<a style="text-decoration: underline; font-size: 12px; cursor: pointer;" @onclick="ShowInstructionModal">@localizer["GameShowInstructionModal"]</a>
+			</div>
+		</div>
+		<div class="game-content-grid">
+			<div class="chat-div" id="chat-div">
+				<div class="chat-spacer"></div>
+				<p style="margin: 0;">@((MarkupString)MessageBoxContent)</p>
+			</div>
+			<div class="feedback-div">
+				<p>@((MarkupString)GeneralInformationBoxContent)</p>
+				@if(currentQuestion > 0)
+				{
+					<div style="display: flex; flex-direction: column;">
+						<p style="align-self: center; font-weight: bold;">@(string.Format((string)localizer["GameScoreboardTitle"], currentQuestion)) @* @($"Scores of players at question #{currentQuestion}") *@</p>
+						<Scoreboard @key=@scoreboardRefreshKey PersonalizedFor="@Username" RelativeForQuestion="@currentQuestion" Rows="5" ShowTopPlayer="true" ShowBottomPlayer="true"></Scoreboard>
+					</div>
+				}
+			</div>
+			<div class="input-div">
+				<input autofocus="autofocus"
+					@ref="InputRef"
+					@bind="UserMessageInput"
+					@bind:event="oninput"
+					@onkeydown="HandleInputKeyDown"
+					disabled="@inputDisabled" />
+
+					@if (chatThinking)
+					{
+					<button type="button" class="halt-button" @onclick="StopResponseButtonClick">
+						<img class="animate animate--fade-in" src="images/halt_button.png" />
+					</button>
+					}
+			</div>
+			<div class="score-div">
+				<p>@scoreBoxContent</p>
+			</div>
+		</div>
+		@if (UserInfoStorage.GetScore(Username) != 0)
+		{
+			<div class="finish-button-div">
+				<button type="button" class="btn btn-light"
+						@onclick="ShowQuitConfirmationModal">
+					@localizer["GameFinishAsking"]
+				</button>
+			</div>
+		}
+	</div>
+</body>
+
+@code {
+	private bool IsRtl => CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+}

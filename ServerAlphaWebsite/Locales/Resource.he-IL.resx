@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MainMenuStart" xml:space="preserve">
+    <value>התחל את המשחק</value>
+  </data>
+  <data name="DisclaimerText1" xml:space="preserve">
+    <value>ברוכים הבאים למשחק המאדים!&lt;br/&gt;&lt;br/&gt;
+אנחנו קבוצת חוקרים החוקרים שאילת שאלות. על ידי השתתפות במשחק המאדים, הנך מסכים לאיסוף ושימוש בנתוני המשחק שלך - כגון השאלות שאתה שואל ותשובותיך - למטרות מחקר.
+הנתונים שלך יהיו אנונימיים, יצטברו עם נתוני משתתפים אחרים ויאוחסנו בצורה מאובטחת כדי להגן על סודיותם.&lt;br/&gt;&lt;br/&gt;
+*כל התייחסות לשחקן בלשון זכר מתייחסת לכלל המינים.&lt;br/&gt;&lt;br/&gt;
+תודה על השתתפותך, ואנו מקווים שתיהנה מהמשחק!&lt;br/&gt;</value>
+  </data>
+  <data name="DisclaimerText2" xml:space="preserve">
+    <value>ברוכים הבאים לאתגר עיצוב עיר במאדים!&lt;br/&gt;&lt;br/&gt;
+המשימה שלכם היא לתכנן מערכת אנרגיה אמינה ובת קיימא לעיר על מאדים.&lt;br/&gt;כדי להשיג זאת, אתם תהיו באינטראקציה עם מארק, סוכן המופעל על ידי בינה מלאכותית שיש לו את התשובות לכל השאלות הרלוונטיות לתכנון מערכת האנרגיה. שאלו שאלות יצירתיות, אנליטיות ורלוונטיות,
+ומארק יספק לכם את המידע הדרוש. תצברו נקודות על סמך האיכות והרלוונטיות של השאלות שלכם.&lt;br/&gt;</value>
+  </data>
+  <data name="DisclaimerText3" xml:space="preserve">
+    <value>המשחק מורכב משני חלקים:&lt;br/&gt;&lt;br/&gt;
+
+1. שאלו שאלות: אספו מידע על ידי שאילת מספר שאלות לסוכן כרצונכם. לאחר כל שאלה, תקבלו מענה על שאלתכם ותצברו נקודות בהתבסס על איכות ורלוונטיות של שאלתכם. במהלך שלב השאלות, סיכום קצר של כל שאלה שתשאלו יופיע בצד ימין של המסך. כאשר תהיו מוכנים לתכנן את מערכת האנרגיה, לחצו על "סיים לשאול" כדי להמשיך לשלב הבא.&lt;br/&gt;&lt;br/&gt;
+
+2. תכננו את מערכת האנרגיה שלכם: השתמשו בידע שצברתם כדי לתכנן את מערכת האנרגיה שלכם.
+לאחר שתגישו את התוכנית שלכם, תקבלו ציון סופי בהתבסס על השאלות, האסטרטגיה ועיצוב המערכת הכולל.
+
+הרלוונטיות של השאלות שלכם תכפיל את הציון שלכם.&lt;br/&gt;</value>
+  </data>
+  <data name="DisclaimerContinueButton" xml:space="preserve">
+    <value>המשך</value>
+  </data>
+  <data name="DisclaimerReverseButton" xml:space="preserve">
+    <value>חזור לאחור</value>
+  </data>
+  <data name="QuestionnaireTitle" xml:space="preserve">
+    <value>אם ברצונך, אנא הזן את הפרטים הדמוגרפיים הבאים כדי לעזור לנו להיות מדויקים יותר.
+לאחר מכן תוכל לגשת למשחק.&lt;br/&gt;ודא שלא הוזנו טעויות, מכיוון שלא תהיה לך הזדמנות לערוך את השאלון בהמשך.</value>
+  </data>
+  <data name="QuestionnaireQuestion1Title" xml:space="preserve">
+    <value>גיל:</value>
+  </data>
+  <data name="QuestionnaireQuestion2Title" xml:space="preserve">
+    <value>מין:</value>
+  </data>
+  <data name="QuestionnaireQuestion3Title" xml:space="preserve">
+    <value>האם עברית היא שפת האם שלך?</value>
+  </data>
+  <data name="QuestionnaireQuestion4Title" xml:space="preserve">
+    <value>מדינה:</value>
+  </data>
+  <data name="QuestionnaireQuestion5Title" xml:space="preserve">
+    <value>רמת השכלה:</value>
+  </data>
+  <data name="QuestionnaireSubmitButton" xml:space="preserve">
+    <value>סיימתי</value>
+  </data>
+  <data name="QuestionnaireGenderMale" xml:space="preserve">
+    <value>זכר</value>
+  </data>
+  <data name="QuestionnaireGenderFemale" xml:space="preserve">
+    <value>נקבה</value>
+  </data>
+  <data name="QuestionnaireGenderNonBinary" xml:space="preserve">
+    <value>א-בינרי</value>
+  </data>
+  <data name="QuestionnaireGenderNaN" xml:space="preserve">
+    <value>מעדיף לא לציין</value>
+  </data>
+  <data name="QuestionnaireYes" xml:space="preserve">
+    <value>כן</value>
+  </data>
+  <data name="QuestionnaireNo" xml:space="preserve">
+    <value>לא</value>
+  </data>
+  <data name="QuestionnaireEducationHighSchool" xml:space="preserve">
+    <value>תעודת בגרות</value>
+  </data>
+  <data name="QuestionnaireEducationSome" xml:space="preserve">
+    <value>מכללה או אוניברסיטה באופן חלקי (ללא תואר)</value>
+  </data>
+  <data name="QuestionnaireEducationBachelors" xml:space="preserve">
+    <value>תואר ראשון</value>
+  </data>
+  <data name="QuestionnaireEducationMasters" xml:space="preserve">
+    <value>תואר שני</value>
+  </data>
+  <data name="QuestionnaireEducationDoctoral" xml:space="preserve">
+    <value>דוקטורט או תואר מקצועי (לדוגמה PHD, MD, JD)</value>
+  </data>
+  <data name="QuestionnaireEducationOther" xml:space="preserve">
+    <value>אחר</value>
+  </data>
+  <data name="GameConfirmationModal" xml:space="preserve">
+    <value>לא תוכל לשאול שאלות נוספות במהלך שלב התכנון.
+&lt;br/&gt;&lt;br/&gt;
+האם אתה בטוח שברצונך להמשיך לשלב התכנון?</value>
+  </data>
+  <data name="GameInformationModal" xml:space="preserve">
+    <value>המשימה שלך היא לתכנן מערכת אנרגיה אמינה ובת קיימא עבור עיר על מאדים.&lt;br/&gt;כדי להשיג זאת, תתקשר עם מארק,
+סוכן המופעל על ידי בינה מלאכותית שיש לו את התשובות לכל השאלות הרלוונטיות לתכנון מערכת האנרגיה. שאל שאלות יצירתיות, אנליטיות ורלוונטיות,
+ומארק יספק את המידע הדרוש לך. תצבור נקודות על סמך איכות השאלות שלך, כאשר הרלוונטיות מכפילה את הציון שלך.&lt;br/&gt;&lt;br/&gt;
+אסוף מידע על ידי שאילת הסוכן כמה שאלות שתרצה. לאחר כל שאלה, תקבל משוב ותצבור נקודות על סמך איכות ורלוונטיות של שאלתך. במהלך שלב השאלות, סיכום קצר
+של כל שאלה שתשאל יופיע בצד ימין של המסך. כאשר אתה מוכן לתכנן את מערכת האנרגיה,
+לחץ על "סיים לשאול" כדי להמשיך לשלב הבא.</value>
+  </data>
+  <data name="GameConfirmationModalContinue" xml:space="preserve">
+    <value>המשך באמת</value>
+  </data>
+  <data name="GameConfirmationModalCancel" xml:space="preserve">
+    <value>בטל</value>
+  </data>
+  <data name="GameInformationModalClose" xml:space="preserve">
+    <value>סגור</value>
+  </data>
+  <data name="GameShowInstructionModal" xml:space="preserve">
+    <value>קרא את ההוראות</value>
+  </data>
+  <data name="GameScoreboardTitle" xml:space="preserve">
+    <value>ציונים של שחקנים בשאלה מספר {0}</value>
+  </data>
+  <data name="GameFinishAsking" xml:space="preserve">
+    <value>סיים לשאול והמשך לשלב התכנון</value>
+  </data>
+  <data name="GamePhaseTitle" xml:space="preserve">
+    <value>שלב שאילת שאלות</value>
+  </data>
+  <data name="SolutionTitle" xml:space="preserve">
+    <value>שלב העיצוב</value>
+  </data>
+  <data name="SolutionTitleInstruction" xml:space="preserve">
+    <value>כתוב את תשובתך כאן:</value>
+  </data>
+  <data name="SolutionSubtitle" xml:space="preserve">
+    <value>לאחר שתגיש את העיצוב שלך, ניצור עבורך תמונה שתמחיש את אופי המערכת.</value>
+  </data>
+  <data name="SolutionSummarize" xml:space="preserve">
+    <value>סכם</value>
+  </data>
+  <data name="SolutionFinish" xml:space="preserve">
+    <value>סיימתי!</value>
+  </data>
+  <data name="FinishText" xml:space="preserve">
+    <value>מזל טוב! &lt;br /&gt;&lt;br /&gt; סיימת את המשחק. מאמציך סייעו לבני האדם להתקדם במסע שלהם לאכלס את מאדים. תשובותיך נרשמו ואנו מודים לך על השתתפותך. &lt;br /&gt;&lt;br /&gt; הציון הסופי שלך הוא {0} נקודות. &lt;br /&gt; לעיון, הציון הממוצע הוא {1} נקודות.</value>
+  </data>
+  <data name="FinishTextAboveAverage" xml:space="preserve">
+    <value>קיבלת ציון מעל הממוצע! כל הכבוד!</value>
+  </data>
+  <data name="FinishIllustrationSubtitle" xml:space="preserve">
+    <value>זוהי המחשה של מערכת האנרגיה שלך.</value>
+  </data>
+  <data name="FinishKeepAskingText" xml:space="preserve">
+    <value>האם ברצונך לשאול עוד שאלות ולשפר את תחנונך?</value>
+  </data>
+  <data name="FinishFinishGame" xml:space="preserve">
+    <value>סיים את המשחק</value>
+  </data>
+  <data name="FinishKeepAsking" xml:space="preserve">
+    <value>לשפר את התכנון שהצעת</value>
+  </data>
+  <data name="Finish2Thanks" xml:space="preserve">
+    <value>תודה על ההשתתפות ואנו מקווים שנהנית מהמשחק!</value>
+  </data>
+  <data name="Finish2Proceed" xml:space="preserve">
+    <value>לחץ כאן כדי להמשיך</value>
+  </data>
+  <data name="Finish2ScoreboardTitle" xml:space="preserve">
+    <value>לוח תוצאות</value>
+  </data>
+  <data name="Finish2CheckSolution" xml:space="preserve">
+    <value>לראות את הפתרון שלי</value>
+  </data>
+  <data name="QuestionnaireContinueButton" xml:space="preserve">
+    <value>להגיש</value>
+  </data>
+  <data name="DisclaimerStartButton" xml:space="preserve">
+    <value>התחל!</value>
+  </data>
+  <data name="GameConfirmationModalTitle" xml:space="preserve">
+    <value>באמת?</value>
+  </data>
+  <data name="GameInformationModalTitle" xml:space="preserve">
+    <value>הוראות למשחק</value>
+  </data>
+  <data name="GameChatTextPlaceholder" xml:space="preserve">
+    <value>ברוכים הבאים לשלב הראשון! אתה יכול להתחיל לשוחח בצ'אט, והעוזר שלך, מארק, יענה על כל שאלה שיש לך.  ודא שהשאלות רלוונטיות, ואל תחזור על עצמך!</value>
+  </data>
+  <data name="GameScore" xml:space="preserve">
+    <value>ניקוד</value>
+  </data>
+  <data name="GameUsernameUser" xml:space="preserve">
+    <value>שחקן</value>
+  </data>
+  <data name="GameUsernameMark" xml:space="preserve">
+    <value>מארק</value>
+  </data>
+  <data name="Finish2PID" xml:space="preserve">
+    <value>מספר מזהה פרוליפיק שלך:</value>
+  </data>
+</root>

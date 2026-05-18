@@ -1,0 +1,23 @@
+﻿@page "/api/login"
+
+@using Microsoft.AspNetCore.Components.Forms;
+@using ServerAlphaWebsite.Forms;
+
+<body>
+	<div class="container-div">
+		<EditForm OnValidSubmit="Submit" Model="@loginForm">
+			<div class="form-group">
+				<label class="form-label" for="Username">Username:</label>
+				<InputText class="@($"form-control {inputValidityClasses["Username"]}")" @bind-Value="loginForm.Username" />
+			</div>
+			<div class="form-group">
+				<label class="form-label" for="Password">Password:</label>
+				<InputText class="@($"form-control {inputValidityClasses["Password"]}")" @bind-Value="loginForm.Password" type="password" />
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-dark">Submit</button>
+			</div>
+		</EditForm>
+		<button class="btn btn-dark" @onclick="HomeButtonClick">Go back</button>
+	</div>
+</body>

@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MainMenuStart" xml:space="preserve">
+    <value>Start Game</value>
+  </data>
+  <data name="DisclaimerText1" xml:space="preserve">
+    <value>Welcome to The Martian Game!&lt;br/&gt;&lt;br/&gt;
+  We are a group of researchers exploring question asking. By participating in
+  The Martian Game, you consent to the collection and use of your gameplay data —
+  such as the questions you ask and your responses — for research purposes.
+  Your data will be anonymized, aggregated with other participants' data and
+  securely stored to protect its confidentiality.&lt;br/&gt;&lt;br/&gt;
+  Thank you for your participation, and we hope you enjoy the game!&lt;br/&gt;</value>
+  </data>
+  <data name="DisclaimerText2" xml:space="preserve">
+    <value>Welcome to the Martian City Design Challenge!&lt;br/&gt;&lt;br/&gt;
+  Your mission is to design a reliable and sustainable energy system for a city on Mars.&lt;br/&gt;To achieve this, you will interact with Mark,
+  an AI-powered agent who has the answers to all questions relevant to planning the energy system. Ask creative, analytical, and relevant questions,
+  and Mark will provide the information you need. You will earn points based on the quality of your questions, with relevance multiplying your score.&lt;br/&gt;</value>
+  </data>
+  <data name="DisclaimerText3" xml:space="preserve">
+    <value>The game consists of two parts:&lt;br/&gt;&lt;br/&gt;
+
+  1. Ask Questions: Gather information by asking the agent as many questions as you like.  After each question, you'll
+  receive feedback and earn points based on the quality and relevance of your inquiry. During the question phase, a short summary
+  of each question you ask will appear on the right side of the screen. When you are ready to plan the energy system,
+  click ""Finish Asking"" to proceed to the next phase.&lt;br/&gt;&lt;br/&gt;
+
+  2. Plan Your Energy System: Use the knowledge you've gained to design your energy system within the provided space.
+  Once you submit your plan, you'll receive a final score based on your questions, strategy, and overall system design.
+
+  The relevance of your questions will multiply your score.&lt;br/&gt;</value>
+  </data>
+  <data name="DisclaimerContinueButton" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="DisclaimerReverseButton" xml:space="preserve">
+    <value>Go Back</value>
+  </data>
+  <data name="QuestionnaireTitle" xml:space="preserve">
+    <value>If you are willing, please enter the following demographic details to help us be more accurate.
+                You will access the game after you do so.&lt;br/&gt;Ensure that you don't make any mistakes, since you won't have a chance to edit the questionnaire later on.</value>
+  </data>
+  <data name="QuestionnaireQuestion1Title" xml:space="preserve">
+    <value>Age:</value>
+  </data>
+  <data name="QuestionnaireQuestion2Title" xml:space="preserve">
+    <value>Gender:</value>
+  </data>
+  <data name="QuestionnaireQuestion3Title" xml:space="preserve">
+    <value>Is English your first language?</value>
+  </data>
+  <data name="QuestionnaireQuestion4Title" xml:space="preserve">
+    <value>Country:</value>
+  </data>
+  <data name="QuestionnaireQuestion5Title" xml:space="preserve">
+    <value>Education:</value>
+  </data>
+  <data name="QuestionnaireSubmitButton" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="QuestionnaireGenderMale" xml:space="preserve">
+    <value>Male</value>
+  </data>
+  <data name="QuestionnaireGenderFemale" xml:space="preserve">
+    <value>Female</value>
+  </data>
+  <data name="QuestionnaireGenderNonBinary" xml:space="preserve">
+    <value>Non-Binary</value>
+  </data>
+  <data name="QuestionnaireGenderNaN" xml:space="preserve">
+    <value>Prefer not to Say</value>
+  </data>
+  <data name="QuestionnaireYes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="QuestionnaireNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="QuestionnaireEducationHighSchool" xml:space="preserve">
+    <value>High school diploma or equivalent</value>
+  </data>
+  <data name="QuestionnaireEducationSome" xml:space="preserve">
+    <value>Some college or university (No degree)</value>
+  </data>
+  <data name="QuestionnaireEducationBachelors" xml:space="preserve">
+    <value>Bachelors degree</value>
+  </data>
+  <data name="QuestionnaireEducationMasters" xml:space="preserve">
+    <value>Masters degree</value>
+  </data>
+  <data name="QuestionnaireEducationDoctoral" xml:space="preserve">
+    <value>Doctoral or Professional degree (e.g. PHD, MD, JD)</value>
+  </data>
+  <data name="QuestionnaireEducationOther" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="GameConfirmationModal" xml:space="preserve">
+    <value>You won't be able to ask any more questions during the design phase.
+&lt;br/&gt;
+Are you sure that you want to proceed to the design phase?</value>
+  </data>
+  <data name="GameInformationModal" xml:space="preserve">
+    <value>Your mission is to design a reliable and sustainable energy system for a city on Mars.&lt;br/&gt;To achieve this, you will interact with Mark,
+an AI-powered agent who has the answers to all questions relevant to planning the energy system. Ask creative, analytical, and relevant questions,
+and Mark will provide the information you need. You will earn points based on the quality of your questions, with relevance multiplying your score.&lt;br/&gt;&lt;br/&gt;
+Gather information by asking the agent as many questions as you like. After each question, you'll
+receive feedback and earn points based on the quality and relevance of your inquiry. During the question phase, a short summary
+of each question you ask will appear on the right side of the screen. When you are ready to plan the energy system,
+click "Finish Asking" to proceed to the next phase.</value>
+  </data>
+  <data name="GameConfirmationModalContinue" xml:space="preserve">
+    <value>Really continue</value>
+  </data>
+  <data name="GameConfirmationModalCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="GameInformationModalClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="GameShowInstructionModal" xml:space="preserve">
+    <value>Read instructions</value>
+  </data>
+  <data name="GameScoreboardTitle" xml:space="preserve">
+    <value>Scores of players at question #{0}</value>
+  </data>
+  <data name="GameFinishAsking" xml:space="preserve">
+    <value>Finish Asking and Proceed to Design Phase</value>
+  </data>
+  <data name="GamePhaseTitle" xml:space="preserve">
+    <value>Question-asking phase</value>
+  </data>
+  <data name="SolutionTitle" xml:space="preserve">
+    <value>Design phase</value>
+  </data>
+  <data name="SolutionTitleInstruction" xml:space="preserve">
+    <value>Input your solution here:</value>
+  </data>
+  <data name="SolutionSubtitle" xml:space="preserve">
+    <value>After you submit your design, we will create an image for you that illustrates the nature of the system.</value>
+  </data>
+  <data name="SolutionSummarize" xml:space="preserve">
+    <value>Summarize</value>
+  </data>
+  <data name="SolutionFinish" xml:space="preserve">
+    <value>I'm done!</value>
+  </data>
+  <data name="FinishText" xml:space="preserve">
+    <value>Congratulations! &lt;br /&gt;&lt;br /&gt; You have completed the game. Your efforts have assisted humans in progressing on their quest to populate Mars. Your responses have been logged and we thank you for participating. &lt;br /&gt;&lt;br /&gt; Your final score is {0} points. &lt;br /&gt; For reference, the average score is {1} points.</value>
+  </data>
+  <data name="FinishTextAboveAverage" xml:space="preserve">
+    <value>You have scored above average! Well done!</value>
+  </data>
+  <data name="FinishIllustrationSubtitle" xml:space="preserve">
+    <value>This is an illustration of your energy system.</value>
+  </data>
+  <data name="FinishKeepAskingText" xml:space="preserve">
+    <value>Would you like to ask more questions and refine your plan?</value>
+  </data>
+  <data name="FinishFinishGame" xml:space="preserve">
+    <value>Finish game</value>
+  </data>
+  <data name="FinishKeepAsking" xml:space="preserve">
+    <value>Ask more questions</value>
+  </data>
+  <data name="Finish2Thanks" xml:space="preserve">
+    <value>Thank you for participating and we hope you enjoyed the game!</value>
+  </data>
+  <data name="Finish2Proceed" xml:space="preserve">
+    <value>Click Here to Proceed</value>
+  </data>
+  <data name="Finish2ScoreboardTitle" xml:space="preserve">
+    <value>Scoreboard</value>
+  </data>
+  <data name="Finish2CheckSolution" xml:space="preserve">
+    <value>Take a look at my solution</value>
+  </data>
+  <data name="QuestionnaireContinueButton" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="DisclaimerStartButton" xml:space="preserve">
+    <value>Let's go!</value>
+  </data>
+  <data name="GameConfirmationModalTitle" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
+  <data name="GameInformationModalTitle" xml:space="preserve">
+    <value>Martian game instruction set</value>
+  </data>
+  <data name="GameChatTextPlaceholder" xml:space="preserve">
+    <value>Welcome to the first stage! You can start chatting away, and your assistant Mark will respond to any questions you have. Just make sure that they're relevant, and don't repeat yourself!</value>
+  </data>
+  <data name="GameScore" xml:space="preserve">
+    <value>Score</value>
+  </data>
+  <data name="GameUsernameUser" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="GameUsernameMark" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="Finish2PID" xml:space="preserve">
+    <value>Your Prolific ID:</value>
+  </data>
+</root>

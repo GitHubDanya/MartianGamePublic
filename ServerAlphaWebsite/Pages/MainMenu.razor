@@ -1,0 +1,38 @@
+﻿@page "/"
+@inject NavigationManager navigationManager
+@inject IStringLocalizer<Resource> localizer
+@inject CultureService CultureService
+
+<PageTitle>The Martian Game</PageTitle>
+
+@if (IsRtl)
+{
+	<style>
+		button {
+			direction: rtl !important;
+		}
+	</style>
+}
+
+<body>
+	<div class="container-div">
+		<div class=" background-div" >
+			<img src="images/main_menu_background.png" class="@backgroundAnimationClass" />
+		</div>
+		<div class="d-flex justify-content-center align-items-center vh-100">
+			<div class="@animationClass menu-div">
+				<img class="logo-1024" src="images/logo_text_1024_512.png" />
+				<button type="button" class="btn btn-light" @onclick="startClicked">@localizer["MainMenuStart"]</button>
+				<button type="button" class="btn btn-light" @onclick="changeLanguage">Change language</button>
+			</div>
+		</div>
+	</div>
+	<div class="landscape-warning">
+		Please rotate your device to landscape mode.
+		<img src="images/turn_phone.png" />
+	</div>
+</body>
+
+@code {
+	private bool IsRtl => CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+}

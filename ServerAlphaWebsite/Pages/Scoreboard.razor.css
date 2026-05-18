@@ -1,0 +1,68 @@
+﻿body {
+    background-color: rgb(36, 36, 36);
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    color: rgb(245, 245, 245);
+    text-align: center;
+}
+
+h1 {
+    font-weight: bold;
+}
+
+input {
+    text-align: left;
+    vertical-align: top;
+    border: 2px solid rgb(78, 78, 78);
+}
+
+    input:focus {
+        border: 2px solid rgb(100, 100, 100);
+    }
+
+.animate {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.slideOutUp {
+    animation-name: slideOutUp;
+    animation-timing-function: ease-in;
+}
+
+.slideInUp {
+    animation-name: slideInUp;
+    animation-timing-function: ease-out;
+}
+
+@keyframes slideOutUp {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-100vh);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100vh);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+#contentDiv {
+    background-color: rgb(48, 48, 48);
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    height: 75%;
+    width: 40%;
+    border-radius: 12px;
+}
