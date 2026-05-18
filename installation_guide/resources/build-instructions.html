@@ -1,0 +1,368 @@
+<head>
+    <link rel="stylesheet" href="resources/prism.css">
+    <script src="resources/prism.js"></script>
+
+    <title>MartianGame build instructions</title>
+</head>
+
+<body>
+    <h1>Build instructions for The Martian Game</h1>
+    <h2>OS Requirements</h2>
+    <p>
+        First, decide on a hosting service of choice. The original experiments have been ran and tested on a
+        <a href="https://www.digitalocean.com/">digitalocean</a> droplet, however any service which provides SSH
+        access will work just as well.
+    </p>
+    <p>Recommended specs:</p>
+    <ul>
+        <li>CPU: At least 2Ghz</li>
+        <li>RAM: At least 512MB</li>
+        <li>Memory: At least 10GB</li>
+    </ul>
+    <p>
+        The operating system that should be installed is <b>Ubuntu Server</b>. The installation .iso can be found <a href="https://ubuntu.com/download/server">here</a>,
+        and official installation instructions can be found <a href="https://ubuntu.com/tutorials/install-ubuntu-server">here</a>. This installation guide was
+        tested on Ubuntu version <code>Ubuntu 24.04.4 LTS</code> .
+    </p>
+    <p>
+        The installation process is largely automized and shouldn't take more than an hour. If any issues arise, the internet holds a great deal
+        of tutorials which should solve them.
+    </p>
+    <h2>OS setup</h2>
+    <p>
+        After installing Ubuntu Server, update the package manager:
+
+        <pre><code class="language-bash">
+sudo apt update && sudo apt upgrade
+        </code></pre>
+    </p>
+
+    <h2>Download the repository from GitHub</h2>
+    <p>
+        Install git and download the MartianGame repository:
+        <pre><code class="language-bash">
+sudo apt-get install git
+git clone GitHubDanya/MartianGamePublic
+cd MartianGamePublic
+        </code></pre>
+    </p>
+
+    <h2>Load the secrets file</h2>
+    <p>
+        The secrets file (called <code>.env</code>) holds secret passwords and keys which are used in sensitive areas. This file includes your API key, login information
+        for the research dashboard and the database password.
+    </p>
+    <p>
+        This file is not shared in the github repository for security reasons. You can either use an existing file (do this if you
+        have been given this file by your access provider), or you can create such file manually.
+    </p><br/>
+
+    <details>
+        <summary style="font-size: 20px; font-weight: bold; color: #CACACA;">I already have this file!</summary>
+        <p>
+            If you have this file provided to you, then you need to transfer it to the server. This can be done using SSH.
+        </p>
+        <h3>
+            Install SSH on Ubuntu
+        </h3>
+        <p>
+            Run the follwing commands if ssh has not been installed already:
+            <pre><code class="language-bash">
+sudo apt install ssh
+sudo systemctl enable ssh
+sudo systemctl start ssh
+sudo systemctl status ssh
+        </code></pre>
+        </p>
+        <p>
+            If everything is lit up green you're good to go. If not, your firewall is probably blocking ssh access. Look up how to
+            unblock port 22 on your hosting service provider.
+        </p>
+        <p>
+            You have to find out the IP address of your linux machine. Scroll down in this guide to the "Locate the ip address of the machine" section
+            and follow it's instructions. 
+        </p>
+        <h3>
+            Copy the file
+        </h3>
+        <p>
+            Now open the command line on your computer which holds the <code>.env</code> file. Right click <b>the folder which contains</b> the file and
+            click <code>Copy as path</code> . Then, in your terminal run the following (REPLACE values in curly braces with your known values):
+            <pre><code class="language-bash">
+cd {PASTE_COPIED_PATH}
+scp .\.env {UBUNTU_USER}@{SERVER_IP_ADDRESS}:~/MartianGamePublic
+        </code></pre>
+        </p>
+        <p>
+            The file should now be on your server.
+        </p>
+        <h3>
+            Format the file
+        </h3>
+        <p>
+            Files created on Windows get encoded in a way that poses issues for other operating systems. To fix this, you must re-encode it using the UNIX protocol.
+            Run these commands to translate the file on your server:
+        </p>
+        <pre><code class="language-bash">
+sudo apt-get install dos2unix
+dos2unix ./.env
+            </code></pre>
+    </details>
+<br/>
+    <details>
+        <summary style="font-size: 20px; font-weight: bold; color: #CACACA;">I want to create a file myself!</summary>
+        <p>
+            To do this, you would need to use a text editor like nano. Run this command:
+        </p>
+        <pre><code class="language-bash">
+nano .env
+        </code></pre>
+        <p>
+            Then, populate the file:
+        </p>
+        <pre><code class="language-bash">
+MARTIAN_DB_CONNSTRING='Host=db;Port=5432;Username=www-data;Password={YOUR PASSWORD HERE};Database=mgdb'
+MARTIAN_DB_PASSWORD='{YOUR PASSWORD HERE}'
+MARTIAN_OPENAI_KEY='{YOUR API KEY HERE}'
+MARTIAN_PYTHON_SO_PATH='/usr/lib/python3.12/config-3.12-x86_64-linux-gnu/libpython3.12.so'
+        </code></pre>
+        <p>
+            Replace values inside of curly braces. Delete curly braces after replacing them. Make sure that you copy everything word to word.
+        </p>
+        <p>
+            * Note that it's not recommended to follow this approach because you have to write down the api key 
+            by hand, which leaves a large margin for error. You can create this file on your Windows machine, and then copy it using the steps
+            in the "I already have this file!" tab.
+        </p>
+        <p>
+            Press <code>Ctrl+O</code> to write changes, and <code>Ctrl+X</code> to exit. You should have a ready-to-go <code>.env</code> file now.
+        </p>
+    </details>
+
+    <h2>Install Docker</h2>
+    <p>
+        Run the provided installation bash script:
+        <pre><code class="language-bash">
+chmod +x ./install-docker.sh
+sudo ./install-docker.sh
+        </code></pre>
+    </p>
+    <p>Troubleshooting:</p>
+    <details>
+        <summary>"-bash: ./install-docker.sh: cannot execute: required file not found"</summary>
+        <p>
+            If you recieve this error, then most likely there is an issue with the way Windows
+            encodes files which is incompatible with UNIX systems. Run these commands to encode
+            the .sh file for unix:
+            <pre><code class="language-bash">
+sudo apt-get install dos2unix
+dos2unix ./install-docker.sh
+            </code></pre>
+            Then execute the file again with  <code>sudo ./install-docker.sh</code>
+        </p>
+    </details>
+
+    <h2>Validate the Docker installation</h2>
+    <p>
+        Ensure that docker is running:
+
+        <pre><code class="language-bash">
+sudo systemctl status docker
+        </code></pre>
+
+        You should see that the service has loaded, and is showing green everywhere.
+    </p>
+
+    <p>Troubleshooting:</p>
+    <details>
+        <summary>It's disabled or not showing up at all!</summary>
+        <p>
+            Docker probably didnt start up automatically. Run:
+            <pre><code class="language-bash">
+sudo systemctl enable docker
+sudo systemctl start docker
+            </code></pre>
+            Then repeat the previous step.
+        </p>
+    </details>
+
+    <h2>Spin up the Docker container</h2>
+    <p>
+        After installing Docker, we have to start up the container. Run these commands:
+        <pre><code class="language-bash">
+sudo docker compose up -d
+        </code></pre>
+    </p>
+    <p>
+        The project should pull the required dependencies and install automatically.<br/>
+        Please be patient as this may take up a lot of time on a low-end system.
+    </p>
+
+    <p>
+        After starting up the docker container, you can access it on your local network!
+    </p>
+
+    <h2>Locate the ip address of the machine</h2>
+    <p>
+        To find out the address of the installation, run the following command:
+        <pre><code class="language-bash">
+ip addr
+        </code></pre>
+    </p>
+
+    <p>
+        You will be greeted with this:
+    </p>
+    <img src="resources/ipaddr.png"/>
+    <p>
+        Dont freak out, we only need the ip address that corresponds to <code>enp0s3</code>, which
+        is underlined in red. Find what address your machine has recieved and keep it in mind.
+    </p>
+    <p>
+        You can access the website by typing this ip address in your browser. For example,
+        on this machine the game will be on <code>192.168.0.101</code>
+    </p>
+
+
+    <h2>Restarting/Rebuilding the container</h2>
+    <p>
+        If you need to restart the container, run this:
+    </p>
+<pre><code class="language-bash">
+sudo docker-compose restart
+
+</code></pre>    
+    <p>
+        If restarting doesn't fix your issue, you can forcefully rebuild the application. This preserves existing data.
+    </p>
+<pre><code class="language-bash">
+sudo docker-compose down
+sudo docker-compose up --build --force-recreate
+
+</code></pre>
+    <p>
+        If you need to completely rebuild everything, and also reset the data:
+    </p>
+<details>
+    <summary style="color: #eb4034">THIS RESETS ALL DATA, ONLY RUN THIS IF YOU KNOW WHAT YOU ARE DOING!</summary>
+    <pre><code class="language-bash">
+sudo docker-compose down -v
+sudo docker-compose up --build --force-recreate
+
+</code></pre>
+</details>
+
+
+
+    <h2>Website troubleshooting</h2>
+    <p>
+        After completing this step, you may encounter some issues. Here are some of the known ones:
+    </p>
+
+    <details>
+        <summary>The website shows a "This site can't be reached" error</summary>
+        <p>
+            This error means that there has been an issue with exposing the http port.<br/>
+        </p>
+        <h3>Solution 1:</h3>
+        <p>
+            Try to add <code>:80</code> to the end of the ip address when accessing it in your browser. For example, instead of <code>192.168.0.101</code>
+            try <code>192.168.0.101:80</code>   .
+        </p>
+        <h3>Soltuion 2:</h3>
+        <p>
+            If the prior solution didn't work, then there might be an issue in the nginx config. Input this command:
+        <pre><code class="language-bash">
+ls -la
+        </code></pre>
+            and see if there is a file called <code>"nginx.conf"</code>
+        </p>
+        <p>
+            If there is no such file, then the repository had some issues with downloading. Try reinstalling the GitHub
+            repository by running these commands:
+            <pre><code class="language-bash">
+cd ../
+rm -r MartianGamePublic
+git clone GitHubDanya/MartianGamePublic
+cd MartianGamePublic
+        </code></pre>
+        </p>
+        <p>
+            Then go over all steps after "Spin up the Docker container" until you return to this point.
+        </p>
+    </details>
+
+    <details>
+        <summary>Data doesn't show up in the research center</summary>
+        <p>
+            If you dont see any data, then there has been an error accessing the database. Make sure that your .env file is intact
+            and has correct information, then rebuild the docker container.
+        </p>
+    </details>
+
+    <details>
+        <summary>The chatbot refuses to answer questions</summary>
+        <p>
+            If the chatbot doesn't respond to your messages, then the most likely culprit is your API key. Ensure that it is spelled
+            correctly in the .env file, then rebuild the docker container.
+        </p>
+    </details>
+
+
+    <h2>Publish the website to the web</h2>
+    <p>
+        To make the website accessible to the web, you will need to work with <a href="https://en.wikipedia.org/wiki/Port_forwarding">port forwarding</a>.<br/>
+        This is handled by your hosting service, so this step differs depending on what you chose.
+        A tutorial for doing this on digitalocean can be found <a href="https://www.digitalocean.com/community/tutorials/opening-a-port-on-linux">here</a>.
+    </p>
+
+    <h2>All done!</h2>
+    <p>
+        Congratulations on successfully completing the setup process for this tool! If you are unable to resolve an issue,
+        please contact your access provider or the repository manager.
+    </p>
+    
+    <h2>Acessing the data</h2>
+
+    <p>
+        Data is accessed by visiting the <code>/api</code> page on the website. Input the login that was set in the .env file,
+        and you recieve full access to the research center, where you can view and download your data.
+    </p>
+</body>
+
+<style>
+    body {
+        width: 60vw;
+        margin: auto;
+        padding: 10vh 0;
+        background-color: #242424;
+        color: #CACACA;
+        font-family: sans-serif;
+    }
+
+    h2 {
+        margin-top: 64px;
+    }
+
+    a {
+        color: #4287f5;
+    }
+    
+    pre {
+        border-radius: 10px;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    details {
+        padding-left: 30px;
+    }
+
+    summary {
+        color: #eb4034;
+    }
+
+    img {
+        max-width: 100%;
+    }
+</style>

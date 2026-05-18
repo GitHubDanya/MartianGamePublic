@@ -1,0 +1,82 @@
+﻿html, body {
+    background-color: rgb(36, 36, 36);
+    font-family: Helvetica, Arial, sans-serif;
+    color: rgb(245, 245, 245);
+    margin: 0;
+    overflow: hidden;
+}
+
+p {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: calc(0.5rem + 1vh);
+    font-weight: bold;
+    width: 70%
+}
+
+.animate {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.slideOutUp {
+    animation-name: slideOutUp;
+    animation-timing-function: ease-in;
+}
+
+.slideInUp {
+    animation-name: slideInUp;
+    animation-timing-function: ease-out;
+}
+
+@keyframes slideOutUp {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-100vh);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100vh);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.container-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.button-div {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    height: fit-content;
+    width: 70%;
+}
+
+.codeText {
+    background-color: rgb(30, 30, 30);
+    width: fit-content;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.second-button-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 30px;
+}

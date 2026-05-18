@@ -1,0 +1,115 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+
+@page "/questionnaire"
+@inject IStringLocalizer<Resource> localizer
+
+@if (IsRtl)
+{
+    <style>
+        p, label {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+
+        .question {
+            align-items: flex-end !important;
+        }
+
+        .radioDiv {
+            flex-direction: row-reverse !important;
+        }
+
+        .form-control {
+            text-align: right!important;
+            direction: rtl !important;  
+        }
+    </style>
+}
+
+<body>
+    <div class="logo-div animate fade-in">
+        <img class="logo" src="images/logo_circle_512_512.png" />
+    </div>
+    <div class="containerDiv">
+        <div class="formDiv">
+            <p class="title">@((MarkupString)(string)localizer["QuestionnaireTitle"])</p>
+            <EditForm Model="response" OnValidSubmit="HandleValidSubmit" class="formElement">
+                <DataAnnotationsValidator />
+                <div class="question">
+                    <label>@localizer["QuestionnaireQuestion1Title"]</label>
+                    <InputNumber @bind-Value="age"
+                                 class="@($"customInput form-control {inputValidityClasses["Age"]}")"
+                                 style="background-color: rgb(45, 45, 45); color: rgb(245, 245, 245); text-align: start;" />
+                </div>
+                <div class="question">
+                    <label>@localizer["QuestionnaireQuestion2Title"]</label><br />
+                    <InputRadioGroup @bind-Value="gender" class="@(inputValidityClasses["Gender"])">
+                        <div class="radioDiv">
+                            <InputRadio style="width: 17px; height: 17px;" Value="@("Male")" /> <p>@localizer["QuestionnaireGenderMale"]</p>
+                        </div>
+                        <div class="radioDiv">
+                            <InputRadio style="width: 17px; height: 17px;" Value="@("Female")" /> <p>@localizer["QuestionnaireGenderFemale"]</p>
+                        </div>
+                        <div class="radioDiv">
+                            <InputRadio style="width: 17px; height: 17px;" Value="@("NonBinary")" /> <p>@localizer["QuestionnaireGenderNonBinary"]</p>
+                        </div>
+                        <div class="radioDiv">
+                            <InputRadio style="width: 17px; height: 17px;" Value="@("PreferNotToSay")" /> <p>@localizer["QuestionnaireGenderNaN"]</p>
+                        </div>
+                    </InputRadioGroup>
+                </div>
+                <div class="question">
+					<label>@localizer["QuestionnaireQuestion3Title"]</label><br />
+					<InputRadioGroup @bind-Value="englishFirstLanguage" class="@(inputValidityClasses["EnglishFirstLanguage"])">
+						<div class="radioDiv">
+							<InputRadio style="width: 17px; height: 17px;" Value="true" /> @localizer["QuestionnaireYes"]
+						</div>
+						<div class="radioDiv">
+							<InputRadio style="width: 17px; height: 17px;" Value="false" /> @localizer["QuestionnaireNo"]
+						</div>
+					</InputRadioGroup>
+				</div>
+                <div class="question">
+                    <label>@localizer["QuestionnaireQuestion4Title"]</label>
+                    <InputText @bind-Value="country"
+                               class="@($"form-control {inputValidityClasses["Country"]}")"
+                               style="background-color: rgb(45, 45, 45); color: rgb(245, 245, 245); text-align: start;" />
+                </div>
+                <div class="question">
+                    <label>@localizer["QuestionnaireQuestion5Title"]</label><br />
+                    <InputRadioGroup @bind-Value="education" class="@(inputValidityClasses["Education"])">
+                        <div class="radioDiv">
+                            <InputRadio style="width: 17px; height: 17px;" Value="@("High school diploma or equivalent")" /> <p>@localizer["QuestionnaireEducationHighSchool"]</p>
+                        </div>
+                        <div class="radioDiv">
+                            <InputRadio style="width: 17px; height: 17px;" Value="@("Some college or university (No degree)")" /> <p>@localizer["QuestionnaireEducationSome"]</p>
+                        </div>
+                        <div class="radioDiv">
+                            <InputRadio style="width: 17px; height: 17px;" Value="@("Bachelors degree")" /> <p>@localizer["QuestionnaireEducationBachelors"]</p>
+                        </div>
+                        <div class="radioDiv">
+                            <InputRadio style="width: 17px; height: 17px;" Value="@("Masters degree")" /> <p>@localizer["QuestionnaireEducationMasters"]</p>
+                        </div>
+                        <div class="radioDiv">
+                            <InputRadio style="width: 17px; height: 17px;" Value="@("Doctoral or Professional degree")" /> <p>@localizer["QuestionnaireEducationDoctoral"]</p>
+                        </div>
+                        <div class="radioDiv">
+                            <InputRadio style="width: 17px; height: 17px;" Value="@("Other")" /> <p>@localizer["QuestionnaireEducationOther"]</p>
+                        </div>
+                    </InputRadioGroup>
+                    @if (education == "Other")
+					{
+                        <InputText @bind-Value="customEducation"
+                                   class="@($"form-control {inputValidityClasses["Education"]}")"
+                                   style="background-color: rgb(45, 45, 45); color: rgb(245, 245, 245); text-align: start;" />
+					}
+                </div>
+                <button type="submit" class="btn btn-primary">@localizer["QuestionnaireSubmitButton"]</button>
+            </EditForm>
+        </div>
+    </div>
+</body>
+
+@code {
+    private bool IsRtl => CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+}

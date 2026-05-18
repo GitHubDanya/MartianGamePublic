@@ -1,0 +1,54 @@
+﻿@page "/solution"
+@inject IStringLocalizer<Resource> localizer
+
+@if (IsRtl)
+{
+	<style>
+		p, textarea, button {
+			direction: rtl !important;
+		}
+	</style>
+}
+
+<body>
+	<div class="bg"></div>
+
+	<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+		<div id="contentDiv">
+			<div class="flex flex-direction-column">
+				<p style="font-weight: bold; font-size: calc(1rem + 0.5vh);">@localizer["SolutionTitle"]</p>
+				<p tabindex="-1" style="font-weight: bold; font-size: calc(1.25rem + 0.5vh); margin: 0;">@localizer["SolutionTitleInstruction"]</p>
+			</div>
+			<textarea style="width: 100%; height: 100%; background-color: rgba(45, 45, 45, 1); color: rgb(245, 245, 245); text-align: start;"
+				   autofocus="autofocus"
+				   disabled="@InputDisabled"
+				   @bind="userMessageInput"
+				   @bind:event="onchange"
+				   @bind:after="HandleInputKeyDown"/>
+			<p style="margin: 0;">
+				@localizer["SolutionSubtitle"]
+			</p>
+			<div style="display: flex; justify-content: center; gap: 1rem !important;">
+				@* <button type="button" class="btn btn-light"
+						@onclick="GoBack">
+					Go back
+				</button> *@
+				<button type="button" class="btn btn-light"
+						@onclick="FinishButtonClick">
+					@localizer["SolutionFinish"]
+				</button>
+				@if (!solutionGenerated)
+				{
+					<button type="button" class="btn btn-light"
+							@onclick="GenerateSolution">
+						@localizer["SolutionSummarize"]
+					</button>
+				}
+			</div>
+		</div>
+	</div>
+</body>
+
+@code {
+	private bool IsRtl => CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+}

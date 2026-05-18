@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNetCore.Components.Forms;
+
+<div class="container-div">
+	<EditForm OnValidSubmit="Submit" Model="@apiForm">
+		<div class="form-group">
+			<label class="form-label" for="Table">Select Table:</label>
+			<select @bind="apiForm.Table">
+				<option value="conversations">Conversations</option>
+				<option value="answers">Answers</option>
+				<option value="forms">Form Submittions</option>
+			</select>
+		</div>
+		<div class="form-group" style="display: flex; flex-direction: row;">
+			<label class="form-label" for="Username">Filter for username:</label>
+			<InputText class="form-control" style="width: 30vw;" @bind-Value="apiForm.Username" />
+		</div>
+		<div class="form-group">
+			<label class="form-label" for="HiddenColumns">Hide columns:<br/></label>
+			@{
+				foreach (string property in HiddenProperties.Keys)
+				{
+					<InputCheckbox @bind-Value="HiddenProperties[property].Value"/> @($"  {property}  ")
+				}
+			}
+		</div>
+		<div class="form-group">
+			<label class="form-label" for="SortByColumn">Sort by:<br /></label>
+			<InputRadioGroup @bind-Value="SortByProperty">
+				@{
+					foreach (string property in HiddenProperties.Keys)
+					{
+						if (property is IComparable)
+						{
+							<InputRadio Value="property" /> @($"  {property}  ")
+						}
+					}
+			}
+			</InputRadioGroup>
+		</div>
+		<div class="form-group">
+			<button type="submit" class="btn btn-dark" @onclick="Submit">Update</button>
+		</div>
+	</EditForm>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				@{
+					foreach (string property in HiddenProperties.Keys)
+					{
+						if (HiddenProperties.ContainsKey(property) && HiddenProperties[property].Value == false)
+						{
+							<th>@property</th>							
+						}
+					}
+				}
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var row in Data)
+			{
+				<tr>
+					@{
+						var dict = (IDictionary<string, object>)row;
+						foreach (KeyValuePair<string, object> pair in dict)
+						{
+							if (HiddenProperties.ContainsKey(pair.Key) && HiddenProperties[pair.Key].Value == false)
+							{
+								<td>@pair.Value</td>
+							}
+						}
+					}
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

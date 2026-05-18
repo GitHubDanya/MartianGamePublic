@@ -1,0 +1,48 @@
+﻿
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			@{
+
+				foreach (string property in ScoreboardProperties)
+				{
+					<th style="background-color: rgb(30, 30, 30); color: #e0e0e0; border: 0;">@property</th>
+				}
+			}
+		</tr>
+	</thead>
+
+	<tbody>
+			@{
+			@foreach (ScoreTableEntry row in ScoreboardData)
+			{
+				<tr>					
+					@{
+						string displayName;
+
+						if (row.username == PersonalizedFor)
+						{
+							displayName = "<b>You</b>";
+						}
+						else if (!string.IsNullOrEmpty(row.username) && row.username.Length >= 6)
+						{
+							displayName = $"Player #{row.username.Substring(row.username.Length - 6, 6)}";
+						}
+						else
+						{
+							var rand = new Random();
+							const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+							var randomStr = new string(Enumerable.Repeat(chars, 6).Select(s => s[rand.Next(s.Length)]).ToArray());
+							displayName = $"Player #{randomStr}";
+						}
+						<td style="background-color: rgb(30, 30, 30); color: #e0e0e0; border: 0;">@(row.id + 1)</td>
+						<td style="background-color: rgb(30, 30, 30); color: #e0e0e0; border: 0;">@((MarkupString)displayName)</td>
+						<td style="background-color: rgb(30, 30, 30); color: #e0e0e0; border: 0;">@row.score.ToString("0.##")</td>
+					}
+				</tr>
+			}}
+
+	</tbody>
+</table>
+

@@ -1,0 +1,91 @@
+﻿body {
+    background-color: rgb(36, 36, 36);
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    color: rgb(245, 245, 245);
+    text-align: center;
+    overflow-x: hidden;
+}
+
+.containerDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+.formDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    gap: 20px;
+    padding: 30px;
+    height: 100%;
+    width: 90vw;
+    margin: 10vh 0 10vh 0;
+}
+
+.title {
+    font-size: 22px;
+}
+
+form {
+    gap: 10px;
+    width: inherit;
+}
+
+.question {
+    background-color: rgb(45, 45, 45);
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start;
+    gap: 5px;
+    text-align: left;
+    margin-bottom: 20px;
+    width: 50vw;
+    padding: 20px;
+    border-radius: 8px;
+}
+    .customInput {
+        width: 100%;
+        height: auto;
+        background-color: rgb(45, 45, 45);
+        color: rgb(245, 245, 245);
+        text-align: start;
+    }
+
+.quesiton-3-radios {
+    display: flex;
+    flex-direction: column;
+}
+
+.radioDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
+.radioDiv p {
+    margin: 0;
+}
+
+    .radioDiv input[type="radio"] {
+        width: 40px;
+        height: 40px;
+    }
+
+.logo-div {
+    position: absolute;
+    height: 6vh;
+    width: 6vh;
+    margin: 30px;
+}
+
+.logo {
+    height: inherit;
+    width: inherit;
+}

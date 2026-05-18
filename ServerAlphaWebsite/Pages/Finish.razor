@@ -1,0 +1,80 @@
+﻿@page "/finish"
+
+@using ServerAlphaWebsite.ServerStorage
+@using ServerAlphaWebsite.Parsers
+@using ServerAlphaWebsite.GameStages.AnsweringStage
+@inject IStringLocalizer<Resource> localizer
+
+@if (IsRtl)
+{
+	<style>
+			p {
+			direction: rtl !important;
+
+		}
+
+		button {
+			direction: rtl !important;
+		}
+	</style>
+}
+
+<body>
+	@if (!finishButtonClicked)
+	{
+		<div class="container-div">
+			<p>
+				@* Congratulations!
+				<br /><br />
+				You have completed the game. Your efforts have assisted humans in progressing on their quest to populate Mars.
+				Your responses have been logged and we thank you for participating.
+				<br /><br />
+				Your final score is @(score.ToString("0.##")) points.
+				<br />
+				For reference, the average score is @(averageScore) points. *@
+
+				@((MarkupString)string.Format(localizer["FinishText"], score.ToString("0.##"), averageScore))
+
+				@if(score > averageScore)
+				{
+					<br />
+					<text>@($" {localizer["FinishTextAboveAverage"]}")</text>
+				}
+			</p>
+			<div class="codeText mb-1" style="@($"height: {(code == LOADING_ICON_PATH ? "75px" : "40vh")}; width: auto;")">
+				<img src="@(code)" style="height: 100%; width: 100%; object-fit: contain;" />
+			</div>
+			@if (code == LOADING_ICON_PATH)
+			{
+				<p style="font-size: 12px; color: #999999;">Image loading...</p>
+			}
+			<p>
+				@localizer["FinishIllustrationSubtitle"] @if (canRetry)
+				{
+					<text>@($" {localizer["FinishKeepAskingText"]}")</text>
+				}<br />
+			</p>
+			<div class="second-button-div">
+				<button type="button" class="btn btn-light" style="justify-self: end;"
+						@onclick="QuitButtonClicked">
+					@localizer["FinishFinishGame"]
+				</button>
+				@if (canRetry)
+				{
+					<button type="button" class="btn btn-light" style="justify-self: end;"
+							@onclick="GoBackButtonClicked">
+						@localizer["FinishKeepAsking"]
+					</button>
+				}
+			</div>
+		</div>
+	}
+	else
+	{
+		<FinishPageTwo></FinishPageTwo>
+	}
+</body>
+
+@code {
+	private bool IsRtl => CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+}

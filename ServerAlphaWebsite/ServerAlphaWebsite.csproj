@@ -1,0 +1,100 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-grid.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-grid.css.map" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css.map" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.css.map" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.min.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.min.css.map" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-reboot.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-reboot.css.map" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-reboot.min.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-reboot.min.css.map" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.css.map" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.min.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.min.css.map" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-utilities.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-utilities.css.map" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-utilities.min.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-utilities.min.css.map" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.css.map" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.min.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.min.css.map" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap.css.map" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap.min.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap.min.css.map" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap.rtl.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap.rtl.css.map" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap.rtl.min.css" />
+    <Content Remove="C:\Users\Chervinskiy\.nuget\packages\bootstrap\5.3.5\contentFiles\any\any\wwwroot\css\bootstrap.rtl.min.css.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\plugins\python\openaiComms.py" />
+    <None Include="wwwroot\plugins\python\prompt.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazor.Bootstrap" Version="3.3.1" />
+    <PackageReference Include="bootstrap" Version="5.3.5" />
+    <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="9.0.7" />
+    <PackageReference Include="Npgsql" Version="9.0.3" />
+    <PackageReference Include="pythonnet" Version="3.0.5" />
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="9.0.2" />
+    <PackageReference Include="System.Security.Permissions" Version="9.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Locales\Resource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\images\game_background.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Locales\Resource - Copy.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Locales\Resource.he-IL.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Locales\Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="PythonEngines\Scripts\answerprompt.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="PythonEngines\Scripts\openaiComms.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="PythonEngines\Scripts\prompt.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

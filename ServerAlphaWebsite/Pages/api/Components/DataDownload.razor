@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNetCore.Components.Forms;
+
+<script src="js/downloadFileFromStream.js"></script>
+
+<div class="container-div">
+	<EditForm OnValidSubmit="Submit" Model="@apiForm">
+		<div class="form-group">
+			<label class="form-label" for="Table">Select Table:</label>
+			<select @bind="apiForm.Table">
+				<option value="conversations">Conversations</option>
+				<option value="answers">Answers</option>
+				<option value="forms">Form Submittions</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<button type="submit" class="btn btn-dark">Download CSV</button>
+		</div>
+	</EditForm>
+</div>
