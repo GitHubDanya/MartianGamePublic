@@ -19,4 +19,4 @@ published March 22nd, 2026, which can be found [here (Cohen et al., 2026)](https
 
 ### Installation
 
-Installation guide can be found inside of the installation_guide folder by accessing the installation.html file.
+To read the installation guide, download and run the installation_guide/installation.html file in your browser.
