@@ -46,22 +46,20 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseAntiforgery();
+app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapGameAuthEndpoints();
-
-app.UseRouting();
+app.UseAntiforgery();
 
 app.UseWebSockets();
-
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 });
 
+app.MapGameAuthEndpoints();
 app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");

@@ -1,17 +1,25 @@
-﻿namespace ServerAlphaWebsite.Pages.api.Components;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 
-public partial class Dashboard : GamePageBase
+namespace ServerAlphaWebsite.Pages.api.Components;
+
+public partial class Dashboard : ComponentBase
 {
-    private bool? loggedIn = null;
+    [Inject]
+    protected NavigationManager navigationManager { get; set; } = null!;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthStateTask { get; set; } = null!;
+
     private DashboardPage CurrentTab = DashboardPage.Dashboard;
 
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-
         var authState = await AuthStateTask;
         if (!authState.User.IsInRole("admin"))
-            navigationManager.NavigateTo("/", forceLoad: true);
+        {
+            navigationManager.NavigateTo("/");
+        }
     }
 
     private void DashboardNavButtonClick() => CurrentTab = DashboardPage.Dashboard;
@@ -19,6 +27,5 @@ public partial class Dashboard : GamePageBase
     private void DeleteDataNavButtonClick() => CurrentTab = DashboardPage.DeleteData;
 
     private async Task LogOut() => navigationManager.NavigateTo("/api/auth/logout", forceLoad: true);
-
     private void RedirectToLogin() => navigationManager.NavigateTo("/api/login");
 }

@@ -1,5 +1,4 @@
 ﻿@page "/api"
-@inherits GamePageBase
 
 <script src="js/cookieHelper.js"></script>
 
@@ -40,10 +39,11 @@
         <Authorized>
             <div class="dashboard-container">
 
-                <div class="tab-menu" style="margin-bottom: 20px;">
+                <div class="tab-menu" style="margin-bottom: 20px; display: flex;">
                     <button class="btn btn-primary" @onclick='() => CurrentTab = DashboardPage.Dashboard'>Dashboard</button>
                     <button class="btn btn-secondary" @onclick='() => CurrentTab = DashboardPage.DownloadData'>Download Data</button>
                     <button class="btn btn-danger" @onclick='() => CurrentTab = DashboardPage.DeleteData'>Delete Data</button>
+                    <a href="/api/auth/logout">logout</a>
                 </div>
 
                 <div class="tab-content" style="padding: 10px; border: 1px solid #ccc;">
