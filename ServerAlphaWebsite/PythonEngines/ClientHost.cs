@@ -1,4 +1,5 @@
-﻿using Python.Runtime;
+﻿using System.Text;
+using Python.Runtime;
 using ServerAlphaWebsite.Classes;
 using ServerAlphaWebsite.Models.DTOs;
 
@@ -110,6 +111,23 @@ namespace ServerAlphaWebsite.PythonEngines
             string timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
             string randomPart = Guid.NewGuid().ToString("N").Substring(0, 6);
             return $"user_{timestamp}_{randomPart}";
+        }
+
+        public static string GetActiveClientsReport()
+        {
+            if (clients.Count == 0)
+                return "No active clients currently tracking.";
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Active Clients:");
+            sb.AppendLine("-------------------------");
+
+            foreach (var kvp in clients)
+            {
+                sb.AppendLine($"- UserID: {kvp.Key} | Current Score: {kvp.Value.Score}");
+            }
+
+            return sb.ToString();
         }
     }
 }

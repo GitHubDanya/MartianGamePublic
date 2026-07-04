@@ -63,7 +63,6 @@ namespace ServerAlphaWebsite.Pages
             { _messageBoxContent = Regex.Replace(value, Config.RegexMarkupPattern, Config.RegexMarkupReplacement).Replace("\n", "<br />"); }
         }
 
-
         [Inject] private StageValidationService StageValidationService { get; set; } = default!;
         [Inject] private IJSRuntime JS { get; set; } = default!;
         [Inject] public IStringLocalizer<Resource> localizer { get; set; } = default!;
@@ -103,6 +102,8 @@ namespace ServerAlphaWebsite.Pages
             if (e.Key != "Enter") return;
 
             StateHasChanged();
+
+            Console.WriteLine(ClientHost.GetActiveClientsReport());
 
             if (string.IsNullOrEmpty(UserMessageInput) || chatThinking)
                 return;

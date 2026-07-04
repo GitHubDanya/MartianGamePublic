@@ -62,8 +62,14 @@ namespace ServerAlphaWebsite.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            await base.OnInitializedAsync();
+
+            score = CurrentUser.Score;
+
             DbCommunicationProvider db = new();
+
             SubscribeToImageGeneratedEvent();
+
             if (!string.IsNullOrEmpty(CurrentUser.ResultImageURL))
                 code = CurrentUser.ResultImageURL;
 

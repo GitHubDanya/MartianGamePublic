@@ -38,5 +38,25 @@
             ResultImageURL = url;
             ImageURLChanged?.Invoke(this, new EventArgs());
         }
+
+        public override string ToString()
+        {
+            // Getting the count of messages for a cleaner output
+            int chatCount = ChatHistory?.Count ?? 0;
+
+            return $@"User Details:
+-------------------------
+Username:            {Username}
+ProlificID:          {ProlificID}
+Experiment:          {Experiment}
+Current Stage:       {CurrentStage}
+Score:               {Score}
+Solution Quality:    {SolutionQuality}
+Tries Left:          {TriesLeft}
+Filled Questionnaire:{FilledQuestionnaire}
+Result Image URL:    {ResultImageURL}
+Chat History:        {chatCount} message(s)
+Solution:            {Solution}";
+        }
     }
 }

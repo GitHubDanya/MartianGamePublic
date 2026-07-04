@@ -16,7 +16,6 @@ namespace ServerAlphaWebsite.Pages
 
         private string userMessageInput;
         private bool InputDisabled { get; set; }
-        private string username;
         private bool imageGenerationDebounce;
         private bool solutionGenerating;
         private bool solutionGenerated;
@@ -32,7 +31,6 @@ namespace ServerAlphaWebsite.Pages
         {
             userMessageInput = "";
             InputDisabled = false;
-            username = "unknown";
             imageGenerationDebounce = false;
             solutionGenerating = false;
             solutionGenerated = false;
@@ -47,14 +45,13 @@ namespace ServerAlphaWebsite.Pages
             if (!imageGenerationDebounce)
             {
                 imageGenerationDebounce = true;
-                _ = Task.Run(() => GenerateAndLogImage(username));
+                _ = Task.Run(() => GenerateAndLogImage(CurrentUser.Username));
             }
         }
 
         protected override async Task OnInitializedAsync()
         {
-            UrlParameterParser parser = new(navigationManager);
-            username = parser.GetUrlParameter("user");
+            await base.OnInitializedAsync();
             userMessageInput = CurrentUser.Solution;
         }
 
@@ -66,8 +63,12 @@ namespace ServerAlphaWebsite.Pages
         private async Task GenerateAndLogImage(string username)
         {
             string imageUrl;
+            Console.WriteLine("Generating image...");
+
             imageUrl = await Task.Run(() => ImageService.GenerateImage(username));
             CurrentUser.UpdateResultImageURL(imageUrl);
+
+            Console.WriteLine($"Image generated: {imageUrl}");
         }
 
         private void GenerateSolution()
@@ -78,7 +79,7 @@ namespace ServerAlphaWebsite.Pages
             InputDisabled = true;
             _ = InvokeAsync(StateHasChanged);
 
-            generatedSolution = ClientHost.GetConversationSummary(username);
+            generatedSolution = ClientHost.GetConversationSummary(CurrentUser.Username);
             userMessageInput = generatedSolution;
 
             InputDisabled = false;
@@ -86,13 +87,15 @@ namespace ServerAlphaWebsite.Pages
             solutionGenerating = false;
 
             StateHasChanged();
+
+            Console.WriteLine(ClientHost.GetActiveClientsReport());
         }
 
         private AnswerDto CreateAnswerDto(User user, AnswerCategorizationDto categorization)
         {
             AnswerDto answer = new AnswerDto()
             {
-                p_userid = username,
+                p_userid = CurrentUser.Username,
                 p_answer = userMessageInput,
                 p_submittime = DateTime.Now,
                 p_solutioncategory = categorization.solutioncategory,
@@ -126,7 +129,7 @@ namespace ServerAlphaWebsite.Pages
 
         private async Task FinishGame()
         {
-            AnswerCategorizationDto answerCategorizationDto = ClientHost.GetAnswerCategorizationDto(username);
+            AnswerCategorizationDto answerCategorizationDto = ClientHost.GetAnswerCategorizationDto(CurrentUser.Username);
 
             CurrentUser.SolutionQuality = answerCategorizationDto.coveragescore;
 

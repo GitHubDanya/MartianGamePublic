@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using ServerAlphaWebsite.Locales;
@@ -14,8 +15,12 @@ public partial class Disclaimer : GamePageBase
 
     [Inject] IStringLocalizer<Resource> localizer { get; set; } = default!;
 
+    private bool IsRtl => CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+
     protected override async Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
+        Console.WriteLine(CurrentUser.ToString());
         Console.WriteLine(System.Globalization.CultureInfo.CurrentCulture.Name);
 
         contentText = new string[]
@@ -30,7 +35,6 @@ public partial class Disclaimer : GamePageBase
 
     private async Task instructionContinueButtonClick()
     {
-
         if (!CurrentUser.FilledQuestionnaire && contentCounter == 0)
         {
             ChangeStage(GameStage.Questionnaire);

@@ -94,6 +94,7 @@ namespace ServerAlphaWebsite.Pages
             catch (Exception ex)
             { Console.WriteLine("(Questionnaire.razor.cs) Error inserting personal info: " + ex.Message); }
 
+            CurrentUser.FilledQuestionnaire = true;
             ChangeStage(GameStage.Disclaimer);
         }
 

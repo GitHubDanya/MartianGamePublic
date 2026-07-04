@@ -37,7 +37,7 @@ public partial class MainLayout : LayoutComponentBase
         else
         {
             var playerId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "";
-            CurrentPlayer = userInfoStorage.GetUser(playerId);
+            CurrentPlayer = userInfoStorage.LogUser(playerId);
         }
     }
 }

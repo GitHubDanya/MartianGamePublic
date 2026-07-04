@@ -11,7 +11,7 @@ public static class AuthEndpoints
     {
         var authGroup = app.MapGroup("/api/auth");
 
-        authGroup.MapGet("/log-user/{customId}", async (string PROLIFIC_PID, HttpContext context) =>
+        authGroup.MapGet("/log-user", async (string? PROLIFIC_PID, HttpContext context) =>
                 {
                     string assignedId = string.IsNullOrWhiteSpace(PROLIFIC_PID)
                     ? ClientHost.GenerateUserId()
