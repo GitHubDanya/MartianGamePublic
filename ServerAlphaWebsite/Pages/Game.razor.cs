@@ -13,104 +13,70 @@ using System.Text.RegularExpressions;
 using ServerAlphaWebsite.Services;
 using Microsoft.Extensions.Localization;
 using ServerAlphaWebsite.Locales;
+using BlazorBootstrap;
 
 namespace ServerAlphaWebsite.Pages
 {
     public partial class Game : ComponentBase
     {
-        // --- Constant Fields ---
 
-        private readonly string CHATBOT_NAME = Config.ChatbotName;
-        private readonly string[] CHATBOT_THINKING_SEQUENCE = Config.ChatbotThinkingSequence;
-        private readonly int MIN_GPT_PARSED_RESPONSE_LENGTH = Config.MinGptParsedResponseLength;
-        private readonly string REGEX_MARKUP_PATTERN = Config.RegexMarkupPattern;
-        private readonly string REGEX_MARKUP_REPLACEMENT = Config.RegexMarkupReplacement;
-        private readonly string ANIMATION_SLIDE_IN_UP = Config.AnimationSlideInUp;
-        private readonly string ANIMATION_SLIDE_OUT_UP = Config.AnimationSlideOutUp;
+        // private readonly string CHATBOT_NAME = Config.ChatbotName;
+        // private readonly string[] CHATBOT_THINKING_SEQUENCE = Config.ChatbotThinkingSequence;
+        // private readonly int MIN_GPT_PARSED_RESPONSE_LENGTH = Config.MinGptParsedResponseLength;
+        // private readonly string REGEX_MARKUP_PATTERN = Config.RegexMarkupPattern;
+        // private readonly string REGEX_MARKUP_REPLACEMENT = Config.RegexMarkupReplacement;
+        // private readonly string ANIMATION_SLIDE_IN_UP = Config.AnimationSlideInUp;
+        // private readonly string ANIMATION_SLIDE_OUT_UP = Config.AnimationSlideOutUp;
 
-        // --- Private Fields ---
 
-        private string _messageBoxContent;
-        private string _generalInformationBoxContent;
+        private string _messageBoxContent = "";
+        private string _generalInformationBoxContent = "";
 
-        private string scoreBoxContent;
-        private string animationClass;
-        private BlazorBootstrap.Modal quitConfirmationModal = default!;
-        private BlazorBootstrap.Modal instructionModal = default!;
+        private string scoreBoxContent = "";
+        private string animationClass = Config.AnimationSlideInUp;
+        private Modal quitConfirmationModal = default!;
+        private Modal instructionModal = default!;
         private ElementReference InputRef;
 
-        private bool inputDisabled;
-        private bool leavingPage;
-        private bool chatThinking;
-        private bool chatEmpty;
-        private int scoreboardRefreshKey;
-        private TaskCompletionSource UserCancelResponseTcs;
+        private bool inputDisabled = false;
+        private bool leavingPage = false;
+        private bool chatThinking = false;
+        private bool chatEmpty = true;
+        private int scoreboardRefreshKey = 0;
+        private TaskCompletionSource UserCancelResponseTcs = new();
         private ChatManager chatManager;
-        private User user;
 
-        private DbCommunicationProvider dbCommProvider;
+        private DbCommunicationProvider dbCommProvider = new();
 
-        // --- Private Properties ---
-
-        private string? UserMessageInput { get; set; }
-
-        // --- Public Properties ---
 
         public string GeneralInformationBoxContent
         {
             get => _generalInformationBoxContent;
             set
-            { _generalInformationBoxContent = Regex.Replace(value, REGEX_MARKUP_PATTERN, REGEX_MARKUP_REPLACEMENT); }
+            { _generalInformationBoxContent = Regex.Replace(value, Config.RegexMarkupPattern, Config.RegexMarkupReplacement); }
         }
         public string MessageBoxContent
         {
             get => _messageBoxContent;
             set
-            { _messageBoxContent = Regex.Replace(value, REGEX_MARKUP_PATTERN, REGEX_MARKUP_REPLACEMENT).Replace("\n", "<br />"); }
+            { _messageBoxContent = Regex.Replace(value, Config.RegexMarkupPattern, Config.RegexMarkupReplacement).Replace("\n", "<br />"); }
         }
 
-        // --- Injected Properties ---
 
-        [Inject] private NavigationManager NavigationManager { get; set; } = default!;
-        [Inject] public UserInfoStorage UserInfoStorage { get; set; } = default!;
         [Inject] private StageValidationService StageValidationService { get; set; } = default!;
         [Inject] private IJSRuntime JS { get; set; } = default!;
         [Inject] public IStringLocalizer<Resource> localizer { get; set; } = default!;
 
         public Game()
         {
-            Username = "unknown";
-            _messageBoxContent = "";
-            _generalInformationBoxContent = string.Empty;
-            scoreBoxContent = "";
-
-            inputDisabled = false;
-            leavingPage = false;
-            chatThinking = false;
-            chatEmpty = true;
-            scoreboardRefreshKey = 0;
-            UserCancelResponseTcs = new TaskCompletionSource();
-            UserMessageInput = string.Empty;
-            dbCommProvider = new DbCommunicationProvider();
-
-            animationClass = ANIMATION_SLIDE_IN_UP;
-        }
-
-        // --- Lifecycle Methods ---
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            if (firstRender)
-            {
-                await StageValidationService.ValidateUserStage(GameStage.Game);
-            }
+            chatManager = new(this);
         }
 
         protected override async Task OnInitializedAsync()
         {
             base.OnInitialized();
 
-            UrlParameterParser parser = new();
+            UrlParameterParser parser = new(navigationManager);
             Username = parser.GetUrlParameter("user", NavigationManager);
             user = UserInfoStorage.GetUser()
 

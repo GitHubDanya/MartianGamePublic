@@ -24,10 +24,6 @@ namespace ServerAlphaWebsite.Pages
         private bool imageLoaded = false;
         private bool finishButtonClicked = false;
 
-        // <br />
-        // <br />
-        // This is the code that you should copy, then paste into Prolific/Google Forms:
-
         [Inject] NavigationManager NavigationManager { get; set; } = default!;
         [Inject] IJSRuntime JS { get; set; } = default!;
         [Inject] UserInfoStorage UserInfoStorage { get; set; } = default!;
@@ -51,7 +47,6 @@ namespace ServerAlphaWebsite.Pages
             if (leavingPage) return;
             leavingPage = true;
 
-            //EraseUser(Username);
             finishButtonClicked = true;
         }
 

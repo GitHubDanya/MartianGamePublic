@@ -12,7 +12,7 @@ namespace ServerAlphaWebsite.Services
             NavigationManager = navigationManager;
         }
 
-        public string GetUrlForStage(GameStage stage) => stage switch
+        public static string GetUrlForStage(GameStage stage) => stage switch
         {
             GameStage.MainMenu => "/",
             GameStage.Disclaimer => "/disclaimer",

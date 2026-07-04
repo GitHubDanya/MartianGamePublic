@@ -5,9 +5,16 @@
         public string Username { get; init; }
         public string ProlificID { get; init; } = string.Empty;
         public string Experiment { get; init; } = string.Empty;
-        public GameStage CurrentStage { get; init; } = GameStage.MainMenu;
+
+        public GameStage CurrentStage { get; set; } = GameStage.MainMenu;
+
         public float Score { get; set; } = 0;
+        public float SolutionQuality { get; set; } = 0;
+
         public int TriesLeft { get; set; } = 1;
+
+        public bool FilledQuestionnaire = false;
+
         public string ResultImageURL { get; private set; } = string.Empty;
         public event EventHandler? ImageURLChanged;
 

@@ -1,45 +1,32 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using ServerAlphaWebsite.PythonEngines;
-using ServerAlphaWebsite.Services;
-using ServerAlphaWebsite.ServerStorage;
 using ServerAlphaWebsite.Parsers;
 using System.Globalization;
 using Microsoft.Extensions.Localization;
 using ServerAlphaWebsite.Locales;
-using ServerAlphaWebsite.Classes;
 
 namespace ServerAlphaWebsite.Pages
 {
-    public partial class MainMenu : ComponentBase
+    public partial class MainMenu : GamePageBase
     {
         private string[] AVAILABLE_CULTURES = { "en-US", "he-IL" };
 
-        private string username = ClientHost.GenerateUsername();
         private string animationClass = "";
         private string backgroundAnimationClass = "";
         private int currentCultureIndex = 0;
 
-        [Inject] private IJSRuntime JS { get; set; } = default!;
-        [Inject] private StageValidationService StageValidationService { get; set; } = default!;
-        [Inject] private UserInfoStorage UserInfoStorage { get; set; } = default!;
-        [Inject] private NavigationManager NavigationManager { get; set; } = default!;
         [Inject] private IStringLocalizer<Resource> localizer { get; set; } = default!;
-        [Inject] private NavigationManager navigationManager { get; set; } = default!;
         [Inject] private CultureService CultureService { get; set; } = default!;
 
         private async Task startClicked()
         {
-            UrlParameterParser parser = new();
-            string Prolific_PID = parser.GetUrlParameter("PROLIFIC_PID", NavigationManager);
-            string experimentId = parser.GetUrlParameter("experimentId", NavigationManager);
+            await animatePageLeaving();
 
-            if (!string.IsNullOrEmpty(Prolific_PID)) username = Prolific_PID;
+            UrlParameterParser parser = new(navigationManager);
+            string Prolific_PID = parser.GetUrlParameter("PROLIFIC_PID");
+            string experimentId = parser.GetUrlParameter("experimentId");
 
-            User user = UserInfoStorage.LogUser(username, experimentId);
-            await StageValidationService.SetUserStage(GameStage.Disclaimer);
-
-            try { NavigationManager.NavigateTo("/disclaimer?user=" + username); } catch { }
+            CurrentUser.CurrentStage = GameStage.Disclaimer;
+            navigationManager.NavigateTo("/disclaimer");
         }
 
         private async Task animatePageLeaving()
@@ -51,7 +38,7 @@ namespace ServerAlphaWebsite.Pages
 
         private async Task apiClicked()
         {
-            try { NavigationManager.NavigateTo("/api"); } catch { }
+            try { navigationManager.NavigateTo("/api"); } catch { }
         }
 
         private async Task changeLanguage()
@@ -63,7 +50,7 @@ namespace ServerAlphaWebsite.Pages
             else
                 currentCultureIndex++;
 
-            ChangeCulture(AVAILABLE_CULTURES[currentCultureIndex]);
+            await ChangeCulture(AVAILABLE_CULTURES[currentCultureIndex]);
         }
 
         private async Task ChangeCulture(string value)
@@ -77,22 +64,12 @@ namespace ServerAlphaWebsite.Pages
                 Console.WriteLine(value);
 
                 navigationManager.NavigateTo($"Culture/Set?culture={cultureEscaped}&redirectUri={uriEscaped}", forceLoad: true);
-
             }
         }
 
         protected override void OnInitialized()
         {
             CultureService.OnChange += () => InvokeAsync(StateHasChanged);
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            if (firstRender)
-            {
-                await StageValidationService.SetUserStage(GameStage.MainMenu);
-                //await ChangeCulture(AVAILABLE_CULTURES[currentCultureIndex]);
-            }
         }
     }
 }
