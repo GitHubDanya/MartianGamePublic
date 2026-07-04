@@ -19,7 +19,7 @@ namespace ServerAlphaWebsite.PythonEngines
             }
         }
 
-        public static OpenAIClient GetClientByUsername(string username)
+        public static OpenAIClient? GetClientByUsername(string username)
         {
             if (clients.ContainsKey(username))
                 return clients[username];

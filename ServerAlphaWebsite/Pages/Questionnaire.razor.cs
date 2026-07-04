@@ -1,28 +1,19 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using ServerAlphaWebsite.Classes;
 using ServerAlphaWebsite.DB;
 using ServerAlphaWebsite.Models.DTOs;
-using ServerAlphaWebsite.Parsers;
 using ServerAlphaWebsite.Services;
-using ServerAlphaWebsite.ServerStorage;
 
 namespace ServerAlphaWebsite.Pages
 {
-    public partial class Questionnaire : ComponentBase
+    public partial class Questionnaire : GamePageBase
     {
         private int MINIMUM_COUNTRY_NAME_LENGTH = 4;
         private int MAXIMUM_AGE = 99;
 
-        [Inject] NavigationManager NavigationManager { get; set; } = default!;
-        [Inject] IJSRuntime JS { get; set; } = default!;
         [Inject] StageValidationService StageValidationService { get; set; } = default!;
-        [Inject] UserInfoStorage userInfoStorage { get; set; } = default!;
 
         PersonalInfoDto response = new PersonalInfoDto();
 
-        public string Username = "unknown";
-        public string ExperimentId = string.Empty;
         private bool FormSubmitted = false;
 
         private Dictionary<string, string> inputValidityClasses = new()
@@ -99,19 +90,19 @@ namespace ServerAlphaWebsite.Pages
             populateResponse();
 
             DbCommunicationProvider provider = new();
-            try { provider.InsertPersonalInfo(response); } catch (Exception ex) { Console.WriteLine("(Questionnaire.razor.cs) Error inserting personal info: " + ex.Message); }
+            try { provider.InsertPersonalInfo(response); }
+            catch (Exception ex)
+            { Console.WriteLine("(Questionnaire.razor.cs) Error inserting personal info: " + ex.Message); }
 
-            await StageValidationService.SetUserStage(GameStage.Disclaimer);
-
-            NavigationManager.NavigateTo("/disclaimer?questionnaireFilled=true&user=" + Username);
+            ChangeStage(GameStage.Disclaimer);
         }
 
         private void populateResponse()
         {
             try
             {
-                response.p_userid = Username;
-                response.p_experimentid = userInfoStorage.GetExperimentId(Username);
+                response.p_userid = CurrentUser.Username;
+                response.p_experimentid = CurrentUser.Experiment;
                 response.p_age = (int?)age;
                 response.p_gender = gender;
                 response.p_isenglishfirstlanguage = (bool?)englishFirstLanguage;
@@ -128,15 +119,8 @@ namespace ServerAlphaWebsite.Pages
             }
         }
 
-        private void InvalidateInput(string input)
-        {
-            inputValidityClasses[input] = "is-invalid";
-        }
-
-        private void ValidateInput(string input)
-        {
-            inputValidityClasses[input] = string.Empty;
-        }
+        private void InvalidateInput(string input) => inputValidityClasses[input] = "is-invalid";
+        private void ValidateInput(string input) => inputValidityClasses[input] = string.Empty;
 
         private bool IsAgeValid()
         {
@@ -168,22 +152,6 @@ namespace ServerAlphaWebsite.Pages
         {
             if (education == "Other" && string.IsNullOrEmpty(customEducation)) return false;
             return true;
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            if (firstRender)
-            {
-                await StageValidationService.ValidateUserStage(GameStage.Questionnaire);
-            }
-        }
-
-        protected override async Task OnInitializedAsync()
-        {
-            await base.OnInitializedAsync();
-            UrlParameterParser parser = new();
-            Username = parser.GetUrlParameter("user", NavigationManager);
-            ExperimentId = userInfoStorage.GetExperimentId(Username);
         }
     }
 }
