@@ -46,6 +46,7 @@ namespace ServerAlphaWebsite.Pages
         private int scoreboardRefreshKey;
         private TaskCompletionSource UserCancelResponseTcs;
         private ChatManager chatManager;
+        private User user;
 
         private DbCommunicationProvider dbCommProvider;
 
@@ -55,7 +56,6 @@ namespace ServerAlphaWebsite.Pages
 
         // --- Public Properties ---
 
-        public string Username { get; set; }
         public string GeneralInformationBoxContent
         {
             get => _generalInformationBoxContent;
@@ -112,13 +112,14 @@ namespace ServerAlphaWebsite.Pages
 
             UrlParameterParser parser = new();
             Username = parser.GetUrlParameter("user", NavigationManager);
+            user = UserInfoStorage.GetUser()
 
             chatManager = new ChatManager(this);
 
             _messageBoxContent = chatManager.GetChatString(localizer);
             if (string.IsNullOrEmpty(_messageBoxContent)) _messageBoxContent = localizer["GameChatTextPlaceholder"];
-            scoreBoxContent = $"{localizer["GameScore"]}: {UserInfoStorage.GetScore(Username)}";
-            currentQuestion = UserInfoStorage.GetQuestionNum(Username);
+            scoreBoxContent = $"{localizer["GameScore"]}: {user.Score}";
+            chatEmpty = user.GetQuestionCount() == 0 ? true : false;
 
             UpdateChatWindow();
         }

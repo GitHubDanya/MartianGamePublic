@@ -1,48 +1,34 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using ServerAlphaWebsite.Fetchers;
+using ServerAlphaWebsite.Classes;
 
 namespace ServerAlphaWebsite.Services
 {
     public class StageValidationService
     {
-        private readonly IJSRuntime JS;
         private readonly NavigationManager NavigationManager;
-        private readonly CookieFetcher CookieFetcher;
-        private readonly NavigationHistoryService NavigationHistoryService;
 
-        public StageValidationService(
-            IJSRuntime jsRuntime,
-            NavigationManager navigationManager,
-            NavigationHistoryService navigationHistoryService)
+        public StageValidationService(NavigationManager navigationManager)
         {
-            JS = jsRuntime;
             NavigationManager = navigationManager;
-            NavigationHistoryService = navigationHistoryService;
-            CookieFetcher = new CookieFetcher(JS);
         }
 
-        public async Task ValidateUserStage(GameStage stage)
+        public string GetUrlForStage(GameStage stage) => stage switch
         {
-            //return;
-            string UserStage = await GetUserStage();
-            if (UserStage != Enum.GetName(stage))
-            {
-                string? referrer = NavigationHistoryService.PreviousPage;
-                if (string.IsNullOrEmpty(referrer) || referrer == "null")
-                    referrer = NavigationHistoryService.PreviousPage ?? "";
-                NavigationManager.NavigateTo(referrer);
-            }
-        }
+            GameStage.MainMenu => "/",
+            GameStage.Disclaimer => "/disclaimer",
+            GameStage.Questionnaire => "/questionnaire",
+            GameStage.Game => "/game",
+            GameStage.Solution => "/solution",
+            GameStage.Finish => "/finish",
+            GameStage.Thanks => "/finish",
+            _ => "/"
+        };
 
-        public async Task SetUserStage(GameStage stage)
+        public async Task ValidateUserStage(User user, GameStage stage)
         {
-            await CookieFetcher.SetCookie(CookieEnum.stage, Enum.GetName(stage) ?? GameStage.MainMenu.ToString());
-        }
+            if (user.CurrentStage == stage) return;
 
-        public async Task<string> GetUserStage()
-        {
-            return await CookieFetcher.GetCookie(CookieEnum.stage);
+            NavigationManager.NavigateTo(GetUrlForStage(user.CurrentStage));
         }
     }
 }

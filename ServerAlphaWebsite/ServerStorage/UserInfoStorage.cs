@@ -6,12 +6,15 @@ namespace ServerAlphaWebsite.ServerStorage
     {
         public List<User> Users = new List<User>();
 
-        public void LogUser(string name, string experimentId)
+        public User LogUser(string name, string experimentId)
         {
-            if (GetUser(name) != null) return;
+            User? existingUser = GetUser(name);
+            if (existingUser != null) return existingUser;
 
             User user = new(name, experimentId: experimentId);
             Users.Add(user);
+
+            return user;
         }
 
         public void DeleteUser(string name)

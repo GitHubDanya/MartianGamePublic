@@ -7,6 +7,7 @@ using ServerAlphaWebsite.Parsers;
 using System.Globalization;
 using Microsoft.Extensions.Localization;
 using ServerAlphaWebsite.Locales;
+using ServerAlphaWebsite.Classes;
 
 namespace ServerAlphaWebsite.Pages
 {
@@ -39,8 +40,7 @@ namespace ServerAlphaWebsite.Pages
 
             if (!string.IsNullOrEmpty(Prolific_PID)) username = Prolific_PID;
 
-            UserInfoStorage.LogUser(username, experimentId);
-            UserInfoStorage.SetPID(username, Prolific_PID);
+            User user = UserInfoStorage.LogUser(username, experimentId);
             await StageValidationService.SetUserStage(GameStage.Disclaimer);
 
             try { NavigationManager.NavigateTo("/disclaimer?user=" + username); } catch { }

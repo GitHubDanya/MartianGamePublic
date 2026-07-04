@@ -1,12 +1,25 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using ServerAlphaWebsite.ServerStorage;
 using ServerAlphaWebsite.Services;
+using ServerAlphaWebsite.Endpoints;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 builder.Services.AddServerSideBlazor();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "GameSessionCookie";
+        options.ExpireTimeSpan = TimeSpan.FromDays(1);
+        options.LoginPath = "/login";
+    });
+
+builder.Services.AddAuthorization();
+builder.Services.AddCascadingAuthenticationState();
 
 builder.Services.AddSingleton<UserInfoStorage>();
 builder.Services.AddScoped<CultureService>();
@@ -31,9 +44,17 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//app.UseHttpsRedirection();
-
+app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseAntiforgery();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapGameAuthEndpoints();
+
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
 
 app.UseRouting();
 

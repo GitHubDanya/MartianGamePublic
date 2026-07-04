@@ -3,27 +3,34 @@
     public class Config
     {
         public static string ChatbotName => "Mark";
-		public static string[] ChatbotThinkingSequence => new string[] { ".", "..", "..." };
-		public static int MinGptParsedResponseLength => 3;
+        public static string[] ChatbotThinkingSequence => new string[] { ".", "..", "..." };
+        public static int MinGptParsedResponseLength => 3;
 
-		#region ANIMATION_NAMES
+        #region ENVIRONMENT_VARIABLES
 
-		public static string AnimationSlideInUp => "animate slideInUp";
-		public static string AnimationSlideOutUp => "animate slideOutUp";
+        public static string LoginUsernameEnvVariableName => "MARTIAN_DB_ADMIN_USER";
+        public static string LoginPasswordEnvVariableName => "MARTIAN_DB_ADMIN_PASSWORD";
 
-		#endregion
+        #endregion
 
-		#region REGEX
+        #region ANIMATION_NAMES
 
-		public static string RegexMarkupPattern => @"\*\*(.*?)\*\*";
-		public static string RegexMarkupReplacement => @"<b>$1</b>";
+        public static string AnimationSlideInUp => "animate slideInUp";
+        public static string AnimationSlideOutUp => "animate slideOutUp";
 
-		#endregion
+        #endregion
 
-		#region	FILE_PATHS
+        #region REGEX
 
-		public static string FilePathLoadingIcon = "images/loading_icon.gif";
+        public static string RegexMarkupPattern => @"\*\*(.*?)\*\*";
+        public static string RegexMarkupReplacement => @"<b>$1</b>";
 
-		#endregion
-	}
+        #endregion
+
+        #region	FILE_PATHS
+
+        public static string FilePathLoadingIcon = "images/loading_icon.gif";
+
+        #endregion
+    }
 }
