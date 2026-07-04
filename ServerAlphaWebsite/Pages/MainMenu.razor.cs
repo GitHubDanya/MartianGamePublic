@@ -30,10 +30,6 @@ namespace ServerAlphaWebsite.Pages
 
         private async Task startClicked()
         {
-            animationClass = "animate slideOutUp";
-            backgroundAnimationClass = "animate fadeOut ";
-            await Task.Delay(1000);
-
             UrlParameterParser parser = new();
             string Prolific_PID = parser.GetUrlParameter("PROLIFIC_PID", NavigationManager);
             string experimentId = parser.GetUrlParameter("experimentId", NavigationManager);
@@ -44,6 +40,13 @@ namespace ServerAlphaWebsite.Pages
             await StageValidationService.SetUserStage(GameStage.Disclaimer);
 
             try { NavigationManager.NavigateTo("/disclaimer?user=" + username); } catch { }
+        }
+
+        private async Task animatePageLeaving()
+        {
+            animationClass = "animate slideOutUp";
+            backgroundAnimationClass = "animate fadeOut ";
+            await Task.Delay(1000);
         }
 
         private async Task apiClicked()

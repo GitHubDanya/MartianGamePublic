@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using ServerAlphaWebsite.PythonEngines;
 
 namespace ServerAlphaWebsite.Endpoints;
 
@@ -10,11 +11,14 @@ public static class AuthEndpoints
     {
         var authGroup = app.MapGroup("/api/auth");
 
-        authGroup.MapGet("/log-user/{customId}", async (string customId, HttpContext context) =>
+        authGroup.MapGet("/log-user/{customId}", async (string PROLIFIC_PID, HttpContext context) =>
                 {
+                    string assignedId = string.IsNullOrWhiteSpace(PROLIFIC_PID)
+                    ? ClientHost.GenerateUserId()
+                    : PROLIFIC_PID;
                     var claims = new List<Claim>
                 {
-                new Claim(ClaimTypes.NameIdentifier, customId),
+                new Claim(ClaimTypes.NameIdentifier, assignedId),
                 new Claim(ClaimTypes.Role, "user")
                 };
 
@@ -29,8 +33,8 @@ public static class AuthEndpoints
 
         authGroup.MapPost("/login", async (HttpContext context, string username, string password) =>
                 {
-                    if (username == Environment.GetEnvironmentVariable(Config.LoginUsernameEnvVariableName)
-                            && password == Environment.GetEnvironmentVariable(Config.LoginPasswordEnvVariableName))
+                    if (username == Environment.GetEnvironmentVariable(ServerAlphaWebsite.Config.LoginUsernameEnvVariableName)
+                            && password == Environment.GetEnvironmentVariable(ServerAlphaWebsite.Config.LoginPasswordEnvVariableName))
                     {
                         var claims = new List<Claim>
                     {
