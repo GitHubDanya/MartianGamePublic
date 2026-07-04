@@ -5,20 +5,6 @@
 @using ServerAlphaWebsite.GameStages.AnsweringStage
 @inject IStringLocalizer<Resource> localizer
 
-@if (IsRtl)
-{
-	<style>
-			p {
-			direction: rtl !important;
-
-		}
-
-		button {
-			direction: rtl !important;
-		}
-	</style>
-}
-
 <body>
 	@if (!finishButtonClicked)
 	{
@@ -75,6 +61,4 @@
 	}
 </body>
 
-@code {
-	private bool IsRtl => CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
-}
+

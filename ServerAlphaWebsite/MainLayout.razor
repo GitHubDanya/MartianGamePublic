@@ -1,3 +1,29 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavManager
 
 <main> @Body </main>
+
+@if (IsRtl)
+{
+<style>
+    p, button, label, textarea {
+        direction: rtl !important;
+    }
+</style>
+}
+
+@code {
+	private bool IsRtl => CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthStateTask { get; set; } = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateTask;
+        var user = authState.User;
+
+        if (user.Identity is null || !user.Identity.IsAuthenticated)
+            NavManager.NavigateTo("/api/auth/log-user", forceLoad: true);
+    }
+}

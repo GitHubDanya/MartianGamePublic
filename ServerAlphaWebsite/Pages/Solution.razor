@@ -1,15 +1,6 @@
 ﻿@page "/solution"
 @inject IStringLocalizer<Resource> localizer
 
-@if (IsRtl)
-{
-	<style>
-		p, textarea, button {
-			direction: rtl !important;
-		}
-	</style>
-}
-
 <body>
 	<div class="bg"></div>
 
@@ -48,7 +39,3 @@
 		</div>
 	</div>
 </body>
-
-@code {
-	private bool IsRtl => CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
-}

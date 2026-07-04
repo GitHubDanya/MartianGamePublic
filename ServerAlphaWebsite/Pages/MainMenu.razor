@@ -2,15 +2,6 @@
 
 <PageTitle>The Martian Game</PageTitle>
 
-@if (IsRtl)
-{
-	<style>
-		button {
-			direction: rtl !important;
-		}
-	</style>
-}
-
 <body>
 	<div class="container-div">
 		<div class=" background-div" >
@@ -29,7 +20,3 @@
 		<img src="images/turn_phone.png" />
 	</div>
 </body>
-
-@code {
-	private bool IsRtl => CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
-}
