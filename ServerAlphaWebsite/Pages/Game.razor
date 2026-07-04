@@ -1,5 +1,5 @@
 ﻿@page "/game"
-@inject NavigationManager navigationManager;
+@inherits GamePageBase
 
 @if (IsRtl)
 {
@@ -115,11 +115,11 @@
 			</div>
 			<div class="feedback-div">
 				<p>@((MarkupString)GeneralInformationBoxContent)</p>
-				@if(currentQuestion > 0)
+				@if(CurrentUser.GetQuestionCount() > 0)
 				{
 					<div style="display: flex; flex-direction: column;">
-						<p style="align-self: center; font-weight: bold;">@(string.Format((string)localizer["GameScoreboardTitle"], currentQuestion)) @* @($"Scores of players at question #{currentQuestion}") *@</p>
-						<Scoreboard @key=@scoreboardRefreshKey PersonalizedFor="@Username" RelativeForQuestion="@currentQuestion" Rows="5" ShowTopPlayer="true" ShowBottomPlayer="true"></Scoreboard>
+						<p style="align-self: center; font-weight: bold;">@(string.Format((string)localizer["GameScoreboardTitle"], CurrentUser.GetQuestionCount())) @* @($"Scores of players at question #{CurrentUser.GetQuestionCount()}") *@</p>
+						<Scoreboard @key=@scoreboardRefreshKey PersonalizedFor="@CurrentUser.Username" RelativeForQuestion="@CurrentUser.GetQuestionCount()" Rows="5" ShowTopPlayer="true" ShowBottomPlayer="true"></Scoreboard>
 					</div>
 				}
 			</div>
@@ -142,7 +142,7 @@
 				<p>@scoreBoxContent</p>
 			</div>
 		</div>
-		@if (UserInfoStorage.GetScore(Username) != 0)
+		@if (CurrentUser.Score != 0)
 		{
 			<div class="finish-button-div">
 				<button type="button" class="btn btn-light"

@@ -53,9 +53,6 @@ app.UseAuthorization();
 
 app.MapGameAuthEndpoints();
 
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
-
 app.UseRouting();
 
 app.UseWebSockets();

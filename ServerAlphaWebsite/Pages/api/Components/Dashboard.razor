@@ -1,4 +1,5 @@
 ﻿@page "/api"
+@inherits GamePageBase
 
 <script src="js/cookieHelper.js"></script>
 
@@ -40,9 +41,9 @@
             <div class="dashboard-container">
 
                 <div class="tab-menu" style="margin-bottom: 20px;">
-                    <button class="btn btn-primary" @onclick='() => CurrentTab = "dashboard"'>Dashboard</button>
-                    <button class="btn btn-secondary" @onclick='() => CurrentTab = "downloaddata"'>Download Data</button>
-                    <button class="btn btn-danger" @onclick='() => CurrentTab = "deletedata"'>Delete Data</button>
+                    <button class="btn btn-primary" @onclick='() => CurrentTab = DashboardPage.Dashboard'>Dashboard</button>
+                    <button class="btn btn-secondary" @onclick='() => CurrentTab = DashboardPage.DownloadData'>Download Data</button>
+                    <button class="btn btn-danger" @onclick='() => CurrentTab = DashboardPage.DeleteData'>Delete Data</button>
                 </div>
 
                 <div class="tab-content" style="padding: 10px; border: 1px solid #ccc;">
@@ -50,11 +51,11 @@
                     {
                     <DataDisplay />
                     }
-                    else if (CurrentTab = DashboardPage.DownloadData)
+                    else if (CurrentTab == DashboardPage.DownloadData)
                     {
                     <DataDownload />
                     }
-                    else if (CurrentTab = DashboardPage.DeleteData)
+                    else if (CurrentTab == DashboardPage.DeleteData)
                     {
                     <p>Not implemented</p>
                     }

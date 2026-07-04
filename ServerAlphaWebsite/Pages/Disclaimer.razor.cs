@@ -1,13 +1,11 @@
-
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using ServerAlphaWebsite.Locales;
 
 namespace ServerAlphaWebsite;
 
-public class Disclaimer : GamePageBase
+public partial class Disclaimer : GamePageBase
 {
-
     private string[] contentText = default!;
 
     private string animationClass = ""; //animate slideInUp
