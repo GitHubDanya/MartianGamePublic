@@ -6,31 +6,26 @@ using ServerAlphaWebsite.GameStages.AnsweringStage;
 using ServerAlphaWebsite.Models.DTOs;
 using ServerAlphaWebsite.Parsers;
 using ServerAlphaWebsite.PythonEngines;
-using ServerAlphaWebsite.ServerStorage;
 using ServerAlphaWebsite.Services;
-
-
 
 namespace ServerAlphaWebsite.Pages
 {
-    public partial class Solution : ComponentBase
+    public partial class Solution : GamePageBase
     {
         // --- Private Fields ---
 
         private string userMessageInput;
         private bool InputDisabled { get; set; }
         private string username;
-        private bool imageGenDb;
-        private bool solutionGeneratedDb;
+        private bool imageGenerationDebounce;
+        private bool solutionGenerating;
         private bool solutionGenerated;
         private string generatedSolution;
         private DbCommunicationProvider dbCommunicationProvider;
 
         // --- Injected Properties ---
 
-        [Inject] private NavigationManager NavigationManager { get; set; } = default!;
         [Inject] private IJSRuntime JS { get; set; } = default!;
-        [Inject] private UserInfoStorage UserInfoStorage { get; set; } = default!;
         [Inject] private StageValidationService StageValidationService { get; set; } = default!;
 
         public Solution()
@@ -38,8 +33,8 @@ namespace ServerAlphaWebsite.Pages
             userMessageInput = "";
             InputDisabled = false;
             username = "unknown";
-            imageGenDb = false;
-            solutionGeneratedDb = false;
+            imageGenerationDebounce = false;
+            solutionGenerating = false;
             solutionGenerated = false;
             generatedSolution = string.Empty;
             dbCommunicationProvider = new();
@@ -49,26 +44,19 @@ namespace ServerAlphaWebsite.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender)
+            if (!imageGenerationDebounce)
             {
-                await StageValidationService.ValidateUserStage(GameStage.Solution);
-            }
-
-            if (!imageGenDb)
-            {
-                imageGenDb = true;
+                imageGenerationDebounce = true;
                 _ = Task.Run(() => GenerateAndLogImage(username));
             }
         }
 
         protected override async Task OnInitializedAsync()
         {
-            UrlParameterParser parser = new();
-            username = parser.GetUrlParameter("user", NavigationManager);
-            userMessageInput = UserInfoStorage.GetSolution(username);
+            UrlParameterParser parser = new(navigationManager);
+            username = parser.GetUrlParameter("user");
+            userMessageInput = CurrentUser.Solution;
         }
-
-        // --- Private Methods ---
 
         private void HandleInputKeyDown()
         {
@@ -79,23 +67,23 @@ namespace ServerAlphaWebsite.Pages
         {
             string imageUrl;
             imageUrl = await Task.Run(() => ImageService.GenerateImage(username));
-            //string imageUrl = ImageService.GenerateImage(username);
-            UserInfoStorage.LogImageUrl(username, imageUrl);
+            CurrentUser.UpdateResultImageURL(imageUrl);
         }
 
         private void GenerateSolution()
         {
-            if (solutionGeneratedDb) return;
+            if (solutionGenerating) return;
 
-            solutionGeneratedDb = true;
+            solutionGenerating = true;
             InputDisabled = true;
-
             _ = InvokeAsync(StateHasChanged);
+
             generatedSolution = ClientHost.GetConversationSummary(username);
             userMessageInput = generatedSolution;
 
             InputDisabled = false;
             solutionGenerated = true;
+            solutionGenerating = false;
 
             StateHasChanged();
         }
@@ -130,27 +118,19 @@ namespace ServerAlphaWebsite.Pages
 
         private async Task GoBack()
         {
-            UserInfoStorage.LogSolution(userMessageInput, username);
-            await StageValidationService.SetUserStage(GameStage.Game);
-            NavigationManager.NavigateTo("/game?user=" + username);
+            CurrentUser.Solution = userMessageInput;
+            ChangeStage(GameStage.Game);
         }
 
-        private async void FinishButtonClick()
-        {
-            await FinishGame();
-        }
+        private async void FinishButtonClick() => await FinishGame();
 
         private async Task FinishGame()
         {
             AnswerCategorizationDto answerCategorizationDto = ClientHost.GetAnswerCategorizationDto(username);
 
-            UserInfoStorage.SetScore(username, UserInfoStorage.GetScore(username) * answerCategorizationDto.coveragescore);
+            CurrentUser.SolutionQuality = answerCategorizationDto.coveragescore;
 
-            User? user = UserInfoStorage.GetUser(username);
-
-            if (user == null) { return; }
-
-            AnswerDto answer = CreateAnswerDto(user, answerCategorizationDto);
+            AnswerDto answer = CreateAnswerDto(CurrentUser, answerCategorizationDto);
 
             try
             {
@@ -161,10 +141,8 @@ namespace ServerAlphaWebsite.Pages
                 Console.WriteLine($"(Solution.razor.cs) Failed to save answer to database.\nException: {ex.Message}");
             }
 
-            UserInfoStorage.LogSolution(userMessageInput, username);
-
-            await StageValidationService.SetUserStage(GameStage.Finish);
-            NavigationManager.NavigateTo("/finish?user=" + username);
+            CurrentUser.Solution = userMessageInput;
+            ChangeStage(GameStage.Finish);
         }
     }
 }

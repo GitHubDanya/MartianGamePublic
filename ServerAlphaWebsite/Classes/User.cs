@@ -28,7 +28,10 @@
             Experiment = experimentId;
         }
 
+        public void IncrementScore(float score) => Score += score;
+
         public int GetQuestionCount() => ChatHistory.Count;
+        public void LogMessage(Message message) => ChatHistory.Add(message);
 
         public void UpdateResultImageURL(string url)
         {

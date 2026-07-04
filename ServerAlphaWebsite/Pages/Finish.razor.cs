@@ -1,15 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using ServerAlphaWebsite.Classes;
 using ServerAlphaWebsite.DB;
 using ServerAlphaWebsite.Models.DTOs;
-using ServerAlphaWebsite.Parsers;
-using ServerAlphaWebsite.ServerStorage;
 using ServerAlphaWebsite.Services;
 
 namespace ServerAlphaWebsite.Pages
 {
-    public partial class Finish : ComponentBase
+    public partial class Finish : GamePageBase
     {
         private readonly string LOADING_ICON_PATH = Config.FilePathLoadingIcon;
 
@@ -24,22 +21,15 @@ namespace ServerAlphaWebsite.Pages
         private bool imageLoaded = false;
         private bool finishButtonClicked = false;
 
-        [Inject] NavigationManager NavigationManager { get; set; } = default!;
         [Inject] IJSRuntime JS { get; set; } = default!;
-        [Inject] UserInfoStorage UserInfoStorage { get; set; } = default!;
         [Inject] StageValidationService StageValidationService { get; set; } = default!;
 
         private void SubscribeToImageGeneratedEvent()
         {
-            User? user = UserInfoStorage.GetUser(Username);
-            if (user == null) return;
-
-            user.ImageURLChanged += (sender, e) => { code = user.ResultImageURL; InvokeAsync(StateHasChanged); };
-        }
-
-        public void EraseUser(string user)
-        {
-            UserInfoStorage.DeleteUser(user);
+            CurrentUser.ImageURLChanged += (sender, e) =>
+            {
+                code = CurrentUser.ResultImageURL; InvokeAsync(StateHasChanged);
+            };
         }
 
         private void QuitButtonClicked()
@@ -66,39 +56,23 @@ namespace ServerAlphaWebsite.Pages
             if (leavingPage) return;
             leavingPage = true;
 
-            UserInfoStorage.RemoveTry(Username);
-            UserInfoStorage.LoadRawScore(Username);
-            await StageValidationService.SetUserStage(GameStage.Game);
-            NavigationManager.NavigateTo("/game?user=" + Username);
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            if (firstRender)
-            {
-                await StageValidationService.ValidateUserStage(GameStage.Finish);
-            }
+            CurrentUser.TriesLeft--;
+            ChangeStage(GameStage.Game);
         }
 
         protected override async Task OnInitializedAsync()
         {
-            UrlParameterParser parser = new();
             DbCommunicationProvider db = new();
-
-            Username = parser.GetUrlParameter("user", NavigationManager);
-            score = UserInfoStorage.GetScore(Username);
-
             SubscribeToImageGeneratedEvent();
-            User? user = UserInfoStorage.GetUser(Username);
-            if (user != null)
-            {
-                if (!string.IsNullOrEmpty(user.ResultImageURL))
-                    code = user.ResultImageURL;
+            if (!string.IsNullOrEmpty(CurrentUser.ResultImageURL))
+                code = CurrentUser.ResultImageURL;
 
-                canRetry = (user.TriesLeft > 0);
-            }
+            canRetry = (CurrentUser.TriesLeft > 0);
 
-            averageScore = (int)Math.Round(GetAverageScore(db.FetchAnswerDtos()), MidpointRounding.AwayFromZero);
+            List<AnswerDto>? fetchedAnswerDtos = db.FetchAnswerDtos();
+            if (fetchedAnswerDtos == null) averageScore = 0;
+            else
+                averageScore = (int)Math.Round(GetAverageScore(fetchedAnswerDtos), MidpointRounding.AwayFromZero);
         }
     }
 }

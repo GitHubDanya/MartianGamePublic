@@ -17,7 +17,7 @@ using BlazorBootstrap;
 
 namespace ServerAlphaWebsite.Pages
 {
-    public partial class Game : ComponentBase
+    public partial class Game : GamePageBase
     {
 
         // private readonly string CHATBOT_NAME = Config.ChatbotName;
@@ -44,10 +44,11 @@ namespace ServerAlphaWebsite.Pages
         private bool chatEmpty = true;
         private int scoreboardRefreshKey = 0;
         private TaskCompletionSource UserCancelResponseTcs = new();
-        private ChatManager chatManager;
+        private ChatManager chatManager = default!;
 
         private DbCommunicationProvider dbCommProvider = new();
 
+        private string UserMessageInput { get; set; } = string.Empty;
 
         public string GeneralInformationBoxContent
         {
@@ -67,25 +68,18 @@ namespace ServerAlphaWebsite.Pages
         [Inject] private IJSRuntime JS { get; set; } = default!;
         [Inject] public IStringLocalizer<Resource> localizer { get; set; } = default!;
 
-        public Game()
-        {
-            chatManager = new(this);
-        }
-
         protected override async Task OnInitializedAsync()
         {
-            base.OnInitialized();
+            await base.OnInitializedAsync();
 
-            UrlParameterParser parser = new(navigationManager);
-            Username = parser.GetUrlParameter("user", NavigationManager);
-            user = UserInfoStorage.GetUser()
+            chatManager = new(CurrentUser, localizer);
 
-            chatManager = new ChatManager(this);
+            _messageBoxContent = chatManager.GetChatString();
 
-            _messageBoxContent = chatManager.GetChatString(localizer);
             if (string.IsNullOrEmpty(_messageBoxContent)) _messageBoxContent = localizer["GameChatTextPlaceholder"];
-            scoreBoxContent = $"{localizer["GameScore"]}: {user.Score}";
-            chatEmpty = user.GetQuestionCount() == 0 ? true : false;
+            scoreBoxContent = $"{localizer["GameScore"]}: {CurrentUser.Score}";
+
+            chatEmpty = CurrentUser.GetQuestionCount() == 0 ? true : false;
 
             UpdateChatWindow();
         }
@@ -120,22 +114,20 @@ namespace ServerAlphaWebsite.Pages
             UpdateChatWindow();
             DisableInput();
             ClearInput();
-
-            _ = Think();
+            _ = AnimateThinking();
 
             ResponseDto response = await GetResponseDto(msg);
             bool responseCancelled = response.response == "Cancelled";
-
 
             if (!responseCancelled)
             {
                 ConversationDto conversation = ConvertToConversationDto(msg, response);
                 dbCommProvider.InsertConversation(conversation);
+
                 chatManager.SendMessage((Message)response);
                 PopulateSecondaryWindows(response);
-                UserInfoStorage.IncrementScore(Username, response.GetTotalScore());
-                UserInfoStorage.IncrementQuestionNum(Username);
-                currentQuestion = UserInfoStorage.GetQuestionNum(Username);
+
+                CurrentUser.IncrementScore(response.GetTotalScore());
             }
             else
             {
@@ -151,8 +143,6 @@ namespace ServerAlphaWebsite.Pages
             scoreboardRefreshKey++;
         }
 
-        // --- UI Methods ---
-
         private Message LogStateIntoMessage()
         {
             Message msg = new Message
@@ -167,7 +157,7 @@ namespace ServerAlphaWebsite.Pages
 
         private void UpdateChatWindow()
         {
-            MessageBoxContent = chatManager.GetChatString(localizer);
+            MessageBoxContent = chatManager.GetChatString();
 
             StateHasChanged();
 
@@ -193,7 +183,7 @@ namespace ServerAlphaWebsite.Pages
         private void PopulateSecondaryWindows(ResponseDto response)
         {
             GeneralInformationBoxContent = response.info;
-            scoreBoxContent = $"{localizer["GameScore"]}: {(UserInfoStorage.GetScore(Username) + response.GetTotalScore()):0.##}";
+            scoreBoxContent = $"{localizer["GameScore"]}: {(CurrentUser.Score + response.GetTotalScore()):0.##}";
         }
 
         private async void ShowQuitConfirmationModal()
@@ -216,23 +206,20 @@ namespace ServerAlphaWebsite.Pages
             await quitConfirmationModal.HideAsync();
         }
 
-        private async Task Think()
+        private async Task AnimateThinking()
         {
             int state = 0;
             string originalChatContent = MessageBoxContent;
 
             chatThinking = true;
 
-            //await Task.Delay(100);
-
             while (chatThinking)
             {
-
-                MessageBoxContent = $"{originalChatContent}\n\n<b>{localizer["GameUsernameMark"]}:</b> {CHATBOT_THINKING_SEQUENCE[state]}";
+                MessageBoxContent = $"{originalChatContent}\n\n<b>{localizer["GameUsernameMark"]}:</b> {Config.ChatbotThinkingSequence[state]}";
 
                 state++;
 
-                if (state >= CHATBOT_THINKING_SEQUENCE.Length)
+                if (state >= Config.ChatbotThinkingSequence.Length)
                     state = 0;
 
                 StateHasChanged();
@@ -246,8 +233,6 @@ namespace ServerAlphaWebsite.Pages
             chatThinking = false;
         }
 
-        // --- Private Methods ---
-
         private async Task<ResponseDto> GetResponseDto(Message rawRequest)
         {
             Message request = rawRequest.Clone();
@@ -260,14 +245,14 @@ namespace ServerAlphaWebsite.Pages
             while (!isValid && retryCount < MAX_RETRIES)
             {
                 request.Content += $" {System.Globalization.CultureInfo.CurrentCulture.Name}";
-                Task GenerationTask = Task.Run(() => response = ClientHost.GetQuestionAnswer(Username, request));
+                Task GenerationTask = Task.Run(() => response = ClientHost.GetQuestionAnswer(CurrentUser.Username, request));
                 Task FlagTask = UserCancelResponseTcs.Task;
 
                 Task CompletedTask = await Task.WhenAny(GenerationTask, FlagTask);
 
                 if (CompletedTask != GenerationTask) // Response cancelled
                 {
-                    ClientHost.ForgetLastMessage(Username);
+                    ClientHost.ForgetLastMessage(CurrentUser.Username);
                     response.response = "Cancelled";
                     isValid = true;
                 }
@@ -287,7 +272,7 @@ namespace ServerAlphaWebsite.Pages
         {
             ConversationDto conversationDto = new ConversationDto()
             {
-                p_userid = Username,
+                p_userid = CurrentUser.Username,
                 p_requesttime = request.Time,
                 p_request = request.Content ?? "",
                 p_response = response.response,
@@ -310,9 +295,9 @@ namespace ServerAlphaWebsite.Pages
 
             ConversationDto conversation = new ConversationDto()
             {
-                p_userid = Username,
+                p_userid = CurrentUser.Username,
                 p_requesttime = request.Time,
-                p_request = request.Content,
+                p_request = request.Content ?? string.Empty,
                 p_response = response.response,
                 p_complexitylevel = response.complexitylevel,
                 p_complexitylevelscore = response.complexitylevelscore,
@@ -347,11 +332,10 @@ namespace ServerAlphaWebsite.Pages
         {
             leavingPage = true;
 
-            animationClass = ANIMATION_SLIDE_OUT_UP;
-            //await Task.Delay(1000);
+            animationClass = Config.AnimationSlideOutUp;
+
             leavingPage = false;
-            await StageValidationService.SetUserStage(GameStage.Solution);
-            try { NavigationManager.NavigateTo("/solution?user=" + Username); } catch { }
+            ChangeStage(GameStage.Solution);
         }
     }
 }
