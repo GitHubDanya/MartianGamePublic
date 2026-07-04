@@ -1,60 +1,24 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using ServerAlphaWebsite.Fetchers;
+﻿namespace ServerAlphaWebsite.Pages.api.Components;
 
-namespace ServerAlphaWebsite.Pages.api.Components
+public partial class Dashboard : GamePageBase
 {
-    public partial class Dashboard : ComponentBase
+    private bool? loggedIn = null;
+    private DashboardPage CurrentTab = DashboardPage.Dashboard;
+
+    protected override async Task OnInitializedAsync()
     {
-        [Inject] IJSRuntime JS { get; set; } = default!;
-        [Inject] NavigationManager NavManager { get; set; } = default!;
+        await base.OnInitializedAsync();
 
-        private bool? loggedIn = null;
-        private CookieFetcher cookieFetcher;
-        private string Page = "dashboard";
-
-        private async Task<bool> LoggedIn()
-        {
-            if (cookieFetcher == null)
-                throw new Exception("CookieFetcher is null");
-
-            string cookieResult = await cookieFetcher.GetCookie(CookieEnum.loggedIn);
-
-            if (cookieResult == "true") return true;
-            return false;
-        }
-
-        private void DashboardNavButtonClick()
-        {
-            Page = "dashboard";
-        }
-
-        private void DownloadDataNavButtonClick()
-        {
-            Page = "downloaddata";
-        }
-
-        private void DeleteDataNavButtonClick()
-        {
-            Page = "deletedata";
-        }
-
-        private async Task LogOut()
-        {
-            await cookieFetcher.ClearCookies();
-            RedirectToLogin();
-        }
-
-        private void RedirectToLogin()
-        {
-            NavManager.NavigateTo("/api/login");
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            cookieFetcher = new CookieFetcher(JS);
-            loggedIn = await LoggedIn();
-            StateHasChanged();
-        }
+        var authState = await AuthStateTask;
+        if (!authState.User.IsInRole("admin"))
+            navigationManager.NavigateTo("/", forceLoad: true);
     }
+
+    private void DashboardNavButtonClick() => CurrentTab = DashboardPage.Dashboard;
+    private void DownloadDataNavButtonClick() => CurrentTab = DashboardPage.DownloadData;
+    private void DeleteDataNavButtonClick() => CurrentTab = DashboardPage.DeleteData;
+
+    private async Task LogOut() => navigationManager.NavigateTo("/api/auth/logout", forceLoad: true);
+
+    private void RedirectToLogin() => navigationManager.NavigateTo("/api/login");
 }

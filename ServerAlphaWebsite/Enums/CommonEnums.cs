@@ -46,4 +46,11 @@
         experimentid,
         loggedIn,
     }
+
+    public enum DashboardPage
+    {
+        Dashboard,
+        DownloadData,
+        DeleteData
+    }
 }

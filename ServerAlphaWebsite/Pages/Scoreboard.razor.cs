@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using ServerAlphaWebsite.DB;
 using ServerAlphaWebsite.Models.DTO;
 using ServerAlphaWebsite.Models.DTOs;

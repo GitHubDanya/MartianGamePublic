@@ -1,13 +1,12 @@
 ﻿using Microsoft.Extensions.Localization;
 using ServerAlphaWebsite.Locales;
-using ServerAlphaWebsite.Parsers;
 
 namespace ServerAlphaWebsite.Classes
 {
-	public class Message
-	{
+    public class Message
+    {
 
-		/* Message class
+        /* Message class
 		 * 
 		 * Used for defining chat messages.
 		 * 
@@ -26,28 +25,28 @@ namespace ServerAlphaWebsite.Classes
 		 *	If withTime is true, includes the time of the message in the string aswell.
 		 */
 
-		public string? Content { get; set; } = string.Empty;
-		public MessageSender Sender { get; set; }
-		public DateTime Time { get; set; }
+        public string? Content { get; set; } = string.Empty;
+        public MessageSender Sender { get; set; }
+        public DateTime Time { get; set; }
 
-		public Message Clone()
-		{
-			return (Message)this.MemberwiseClone();
-		}
+        public Message Clone()
+        {
+            return (Message)this.MemberwiseClone();
+        }
 
-		public string AsString(IStringLocalizer<Resource> localizer, bool withTime = false)
-		{
-			string? messageString;
+        public string AsString(IStringLocalizer<Resource> localizer, bool withTime = false)
+        {
+            string? messageString;
 
-			messageString = $"<b>{(Sender == MessageSender.GPT? localizer["GameUsernameMark"] : localizer["GameUsernameUser"])}:</b> {Content}";
+            messageString = $"<b>{(Sender == MessageSender.GPT ? localizer["GameUsernameMark"] : localizer["GameUsernameUser"])}:</b> {Content}";
 
-			if (messageString == null)
-				return string.Empty;
+            if (messageString == null)
+                return string.Empty;
 
-			if (withTime)
-				messageString = $"{Time.Hour}:{Time.Minute} - {messageString}";
+            if (withTime)
+                messageString = $"{Time.Hour}:{Time.Minute} - {messageString}";
 
-			return messageString;
-		}
-	}
+            return messageString;
+        }
+    }
 }

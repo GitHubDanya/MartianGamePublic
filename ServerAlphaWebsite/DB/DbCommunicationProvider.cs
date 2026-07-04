@@ -2,13 +2,7 @@
 using ServerAlphaWebsite.Models.DTO;
 using System.Data;
 using Dapper;
-using System.Security.Permissions;
-using System;
-using System.IO;
-using System.Security.Cryptography;
 using ServerAlphaWebsite.Models.DTOs;
-using System.Diagnostics;
-using System.Reflection.Metadata;
 using System.Text;
 
 namespace ServerAlphaWebsite.DB;
@@ -132,16 +126,16 @@ public class DbCommunicationProvider
         }
     }
 
-	public List<ConversationDto>? FetchConversationDtos()
-	{
-		try
-		{
-			if (CONNSTRING == null)
-				return null;
+    public List<ConversationDto>? FetchConversationDtos()
+    {
+        try
+        {
+            if (CONNSTRING == null)
+                return null;
 
-			using (IDbConnection connection = new NpgsqlConnection(connectionString: CONNSTRING))
-			{
-				List<ConversationDto> result = connection.Query<ConversationDto>(@"
+            using (IDbConnection connection = new NpgsqlConnection(connectionString: CONNSTRING))
+            {
+                List<ConversationDto> result = connection.Query<ConversationDto>(@"
                 SELECT
                     id AS p_id,
                     userid AS p_userid,
@@ -160,17 +154,17 @@ public class DbCommunicationProvider
                     FROM conversations;
                 ").ToList();
 
-				return result;
-			}
-		}
-		catch (Exception ex)
-		{
-			Console.WriteLine(ex.Message);
-			return null;
-		}
-	}
+                return result;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return null;
+        }
+    }
 
-	public List<dynamic>? FetchAnswers()
+    public List<dynamic>? FetchAnswers()
     {
         try
         {

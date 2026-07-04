@@ -48,10 +48,16 @@ public static class AuthEndpoints
                         await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                                 new ClaimsPrincipal(claimsIdentity));
 
-                        return Results.Redirect("/");
+                        return Results.Redirect("/api");
                     }
 
-                    return Results.Unauthorized();
+                    return Results.Redirect("/api/login");
+                });
+
+        authGroup.MapGet("/logout", async (HttpContext context) =>
+                {
+                    await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                    return Results.Redirect("/");
                 });
 
         return app;

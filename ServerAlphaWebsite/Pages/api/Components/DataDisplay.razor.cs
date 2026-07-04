@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using ServerAlphaWebsite.DB;
 using ServerAlphaWebsite.Forms;
-using ServerAlphaWebsite.Models.DTO;
-using ServerAlphaWebsite.Models.DTOs;
 
 namespace ServerAlphaWebsite.Pages.api.Components
 {
@@ -70,26 +68,26 @@ namespace ServerAlphaWebsite.Pages.api.Components
             try
             {
                 DbCommunicationProvider dbCommunicationProvider = new DbCommunicationProvider();
-				return apiform.Table switch
-				{
-					"conversations" => dbCommunicationProvider.FetchConversations()
-						.Where(x => x != null)
-						.OrderBy(x => GetDynamicPropertyValue(x, SortByProperty))
-						.Cast<object>(),
+                return apiform.Table switch
+                {
+                    "conversations" => dbCommunicationProvider.FetchConversations()
+                        .Where(x => x != null)
+                        .OrderBy(x => GetDynamicPropertyValue(x, SortByProperty))
+                        .Cast<object>(),
 
-					"answers" => dbCommunicationProvider.FetchAnswers()
-						.Where(x => x != null)
-						.OrderBy(x => GetDynamicPropertyValue(x, SortByProperty))
-						.Cast<object>(),
+                    "answers" => dbCommunicationProvider.FetchAnswers()
+                        .Where(x => x != null)
+                        .OrderBy(x => GetDynamicPropertyValue(x, SortByProperty))
+                        .Cast<object>(),
 
-					"forms" => dbCommunicationProvider.FetchPersonalInfo()
-						.Where(x => x != null)
-						.OrderBy(x => GetDynamicPropertyValue(x, SortByProperty))
-						.Cast<object>(),
+                    "forms" => dbCommunicationProvider.FetchPersonalInfo()
+                        .Where(x => x != null)
+                        .OrderBy(x => GetDynamicPropertyValue(x, SortByProperty))
+                        .Cast<object>(),
 
-					_ => Enumerable.Empty<object>()
-				};
-			}
+                    _ => Enumerable.Empty<object>()
+                };
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
@@ -97,24 +95,24 @@ namespace ServerAlphaWebsite.Pages.api.Components
             }
         }
 
-		private object GetDynamicPropertyValue(dynamic obj, string propertyName)
-		{
-			if (obj == null) return null;
+        private object GetDynamicPropertyValue(dynamic obj, string propertyName)
+        {
+            if (obj == null) return null;
 
-			if (obj is IDictionary<string, object> dict && dict.ContainsKey(propertyName))
-				return dict[propertyName];
+            if (obj is IDictionary<string, object> dict && dict.ContainsKey(propertyName))
+                return dict[propertyName];
 
-			try
-			{
-				return ((object)obj).GetType().GetProperty(propertyName)?.GetValue(obj, null);
-			}
-			catch
-			{
-				return null;
-			}
-		}
+            try
+            {
+                return ((object)obj).GetType().GetProperty(propertyName)?.GetValue(obj, null);
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
-		private List<string> GetPropertiesOfData(List<object> data)
+        private List<string> GetPropertiesOfData(List<object> data)
         {
             var firstRow = data.FirstOrDefault();
 
