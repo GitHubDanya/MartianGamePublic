@@ -4,17 +4,15 @@ using ServerAlphaWebsite.Classes;
 using ServerAlphaWebsite.PythonEngines;
 using ServerAlphaWebsite.Parsers;
 using ServerAlphaWebsite.GameStages.QuestionAskingStage;
-using Python.Runtime;
 using ServerAlphaWebsite.Models.DTOs;
 using ServerAlphaWebsite.Models.DTO;
 using ServerAlphaWebsite.DB;
 using ServerAlphaWebsite.ServerStorage;
 using Microsoft.JSInterop;
 using System.Text.RegularExpressions;
-using static System.Formats.Asn1.AsnWriter;
-using System.Buffers.Text;
-using ServerAlphaWebsite.Fetchers;
 using ServerAlphaWebsite.Services;
+using Microsoft.Extensions.Localization;
+using ServerAlphaWebsite.Locales;
 
 namespace ServerAlphaWebsite.Pages
 {
@@ -44,7 +42,7 @@ namespace ServerAlphaWebsite.Pages
         private bool inputDisabled;
         private bool leavingPage;
         private bool chatThinking;
-        private int currentQuestion;
+        private bool chatEmpty;
         private int scoreboardRefreshKey;
         private TaskCompletionSource UserCancelResponseTcs;
         private ChatManager chatManager;
@@ -77,11 +75,11 @@ namespace ServerAlphaWebsite.Pages
         [Inject] public UserInfoStorage UserInfoStorage { get; set; } = default!;
         [Inject] private StageValidationService StageValidationService { get; set; } = default!;
         [Inject] private IJSRuntime JS { get; set; } = default!;
+        [Inject] public IStringLocalizer<Resource> localizer { get; set; } = default!;
 
         public Game()
         {
             Username = "unknown";
-            //_messageBoxContent = "Welcome to the Martian City Design Challenge! Your mission is to design a reliable and sustainable energy system for a city on Mars. To achieve this, you will interact with Mark, an AI-powered agent who has the answers to all questions relevant to planning the energy system. Ask creative, analytical, and relevant questions, and Mark will provide the information you need. You will earn points based on the quality of your questions, with relevance multiplying your score. Let’s get started!";
             _messageBoxContent = "";
             _generalInformationBoxContent = string.Empty;
             scoreBoxContent = "";
@@ -89,7 +87,7 @@ namespace ServerAlphaWebsite.Pages
             inputDisabled = false;
             leavingPage = false;
             chatThinking = false;
-            currentQuestion = 0;
+            chatEmpty = true;
             scoreboardRefreshKey = 0;
             UserCancelResponseTcs = new TaskCompletionSource();
             UserMessageInput = string.Empty;

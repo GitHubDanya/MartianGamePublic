@@ -4,9 +4,9 @@ using ServerAlphaWebsite.PythonEngines;
 using ServerAlphaWebsite.Services;
 using ServerAlphaWebsite.ServerStorage;
 using ServerAlphaWebsite.Parsers;
-using ServerAlphaWebsite.Fetchers;
 using System.Globalization;
-using System.Text.RegularExpressions;
+using Microsoft.Extensions.Localization;
+using ServerAlphaWebsite.Locales;
 
 namespace ServerAlphaWebsite.Pages
 {
@@ -23,6 +23,9 @@ namespace ServerAlphaWebsite.Pages
         [Inject] private StageValidationService StageValidationService { get; set; } = default!;
         [Inject] private UserInfoStorage UserInfoStorage { get; set; } = default!;
         [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+        [Inject] private IStringLocalizer<Resource> localizer { get; set; } = default!;
+        [Inject] private NavigationManager navigationManager { get; set; } = default!;
+        [Inject] private CultureService CultureService { get; set; } = default!;
 
         private async Task startClicked()
         {
