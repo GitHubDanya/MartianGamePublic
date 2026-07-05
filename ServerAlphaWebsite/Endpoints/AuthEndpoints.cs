@@ -51,6 +51,12 @@ public static class AuthEndpoints
 
                         return Results.Redirect("/api");
                     }
+                    else
+                    {
+                        Console.WriteLine("Recieved incorrect login information:");
+                        Console.WriteLine($"Request username: {username}     ({Environment.GetEnvironmentVariable(ServerAlphaWebsite.Config.LoginUsernameEnvVariableName)})");
+                        Console.WriteLine($"Request password: {password}     ({Environment.GetEnvironmentVariable(ServerAlphaWebsite.Config.LoginPasswordEnvVariableName)})");
+                    }
 
                     return Results.Redirect("/api/login");
                 }).DisableAntiforgery();
