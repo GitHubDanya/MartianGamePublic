@@ -20,8 +20,8 @@ public partial class Disclaimer : GamePageBase
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        Console.WriteLine(CurrentUser.ToString());
-        Console.WriteLine(System.Globalization.CultureInfo.CurrentCulture.Name);
+        // Console.WriteLine(CurrentUser.ToString());
+        // Console.WriteLine(System.Globalization.CultureInfo.CurrentCulture.Name);
 
         contentText = new string[]
         {

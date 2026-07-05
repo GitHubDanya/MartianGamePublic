@@ -2,12 +2,10 @@
 using Microsoft.AspNetCore.Components.Web;
 using ServerAlphaWebsite.Classes;
 using ServerAlphaWebsite.PythonEngines;
-using ServerAlphaWebsite.Parsers;
 using ServerAlphaWebsite.GameStages.QuestionAskingStage;
 using ServerAlphaWebsite.Models.DTOs;
 using ServerAlphaWebsite.Models.DTO;
 using ServerAlphaWebsite.DB;
-using ServerAlphaWebsite.ServerStorage;
 using Microsoft.JSInterop;
 using System.Text.RegularExpressions;
 using ServerAlphaWebsite.Services;
@@ -102,8 +100,6 @@ namespace ServerAlphaWebsite.Pages
             if (e.Key != "Enter") return;
 
             StateHasChanged();
-
-            Console.WriteLine(ClientHost.GetActiveClientsReport());
 
             if (string.IsNullOrEmpty(UserMessageInput) || chatThinking)
                 return;

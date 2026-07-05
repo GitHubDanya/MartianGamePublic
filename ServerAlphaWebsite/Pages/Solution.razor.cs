@@ -63,12 +63,9 @@ namespace ServerAlphaWebsite.Pages
         private async Task GenerateAndLogImage(string username)
         {
             string imageUrl;
-            Console.WriteLine("Generating image...");
 
             imageUrl = await Task.Run(() => ImageService.GenerateImage(username));
             CurrentUser.UpdateResultImageURL(imageUrl);
-
-            Console.WriteLine($"Image generated: {imageUrl}");
         }
 
         private void GenerateSolution()
