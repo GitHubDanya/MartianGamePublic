@@ -8,6 +8,8 @@ namespace ServerAlphaWebsite.Pages
 {
     public partial class Finish : GamePageBase
     {
+        protected override GameStage CurrentStage { get; init; } = GameStage.Finish;
+
         private readonly string LOADING_ICON_PATH = Config.FilePathLoadingIcon;
 
         private float score = 0;

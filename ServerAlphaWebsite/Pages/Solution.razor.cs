@@ -4,7 +4,6 @@ using ServerAlphaWebsite.Classes;
 using ServerAlphaWebsite.DB;
 using ServerAlphaWebsite.GameStages.AnsweringStage;
 using ServerAlphaWebsite.Models.DTOs;
-using ServerAlphaWebsite.Parsers;
 using ServerAlphaWebsite.PythonEngines;
 using ServerAlphaWebsite.Services;
 
@@ -12,6 +11,8 @@ namespace ServerAlphaWebsite.Pages
 {
     public partial class Solution : GamePageBase
     {
+        protected override GameStage CurrentStage { get; init; } = GameStage.Solution;
+
         // --- Private Fields ---
 
         private string userMessageInput;
@@ -84,8 +85,6 @@ namespace ServerAlphaWebsite.Pages
             solutionGenerating = false;
 
             StateHasChanged();
-
-            Console.WriteLine(ClientHost.GetActiveClientsReport());
         }
 
         private AnswerDto CreateAnswerDto(User user, AnswerCategorizationDto categorization)

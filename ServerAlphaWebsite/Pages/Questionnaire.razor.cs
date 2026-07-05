@@ -7,6 +7,8 @@ namespace ServerAlphaWebsite.Pages
 {
     public partial class Questionnaire : GamePageBase
     {
+        protected override GameStage CurrentStage { get; init; } = GameStage.Questionnaire;
+
         private int MINIMUM_COUNTRY_NAME_LENGTH = 4;
         private int MAXIMUM_AGE = 99;
 

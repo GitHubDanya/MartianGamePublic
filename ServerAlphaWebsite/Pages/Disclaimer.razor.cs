@@ -7,6 +7,8 @@ namespace ServerAlphaWebsite;
 
 public partial class Disclaimer : GamePageBase
 {
+    protected override GameStage CurrentStage { get; init; } = GameStage.Disclaimer;
+
     private string[] contentText = default!;
 
     private string animationClass = ""; //animate slideInUp

@@ -18,6 +18,8 @@ namespace ServerAlphaWebsite.Pages
     public partial class Game : GamePageBase
     {
 
+        protected override GameStage CurrentStage { get; init; } = GameStage.Game;
+
         // private readonly string CHATBOT_NAME = Config.ChatbotName;
         // private readonly string[] CHATBOT_THINKING_SEQUENCE = Config.ChatbotThinkingSequence;
         // private readonly int MIN_GPT_PARSED_RESPONSE_LENGTH = Config.MinGptParsedResponseLength;

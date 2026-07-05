@@ -17,6 +17,8 @@ namespace ServerAlphaWebsite.Pages
         [Inject] private IStringLocalizer<Resource> localizer { get; set; } = default!;
         [Inject] private CultureService CultureService { get; set; } = default!;
 
+        protected override GameStage CurrentStage { get; init; } = GameStage.MainMenu;
+
         private async Task startClicked()
         {
             await animatePageLeaving();

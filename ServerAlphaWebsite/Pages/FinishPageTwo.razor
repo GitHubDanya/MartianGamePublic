@@ -73,6 +73,8 @@
 </div>
 
 @code {
+    protected override GameStage CurrentStage { get; init; } = GameStage.Finish;
+
 	private BlazorBootstrap.Modal answerModal = default!;
 	string imageurl = "/images/alien.png";
 	string answer = string.Empty;
