@@ -8,7 +8,6 @@ using ServerAlphaWebsite.Models.DTO;
 using ServerAlphaWebsite.DB;
 using Microsoft.JSInterop;
 using System.Text.RegularExpressions;
-using ServerAlphaWebsite.Services;
 using Microsoft.Extensions.Localization;
 using ServerAlphaWebsite.Locales;
 using BlazorBootstrap;
@@ -63,7 +62,6 @@ namespace ServerAlphaWebsite.Pages
             { _messageBoxContent = Regex.Replace(value, Config.RegexMarkupPattern, Config.RegexMarkupReplacement).Replace("\n", "<br />"); }
         }
 
-        [Inject] private StageValidationService StageValidationService { get; set; } = default!;
         [Inject] private IJSRuntime JS { get; set; } = default!;
         [Inject] public IStringLocalizer<Resource> localizer { get; set; } = default!;
 

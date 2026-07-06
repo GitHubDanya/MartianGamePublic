@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using ServerAlphaWebsite.Classes;
 using ServerAlphaWebsite.ServerStorage;
-using ServerAlphaWebsite.Services;
 using System.Security.Claims;
 
 namespace ServerAlphaWebsite;
@@ -47,6 +46,6 @@ public abstract class GamePageBase : ComponentBase
     protected void ChangeStage(GameStage stage)
     {
         CurrentUser.CurrentStage = stage;
-        navigationManager.NavigateTo(StageValidationService.GetUrlForStage(stage));
+        navigationManager.NavigateTo(GetUrlForStage(stage));
     }
 }

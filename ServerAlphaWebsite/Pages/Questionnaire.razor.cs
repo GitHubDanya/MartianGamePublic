@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
-using ServerAlphaWebsite.DB;
+﻿using ServerAlphaWebsite.DB;
 using ServerAlphaWebsite.Models.DTOs;
-using ServerAlphaWebsite.Services;
 
 namespace ServerAlphaWebsite.Pages
 {
@@ -11,8 +9,6 @@ namespace ServerAlphaWebsite.Pages
 
         private int MINIMUM_COUNTRY_NAME_LENGTH = 4;
         private int MAXIMUM_AGE = 99;
-
-        [Inject] StageValidationService StageValidationService { get; set; } = default!;
 
         PersonalInfoDto response = new PersonalInfoDto();
 

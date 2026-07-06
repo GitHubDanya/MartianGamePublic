@@ -2,7 +2,6 @@
 using Microsoft.JSInterop;
 using ServerAlphaWebsite.DB;
 using ServerAlphaWebsite.Models.DTOs;
-using ServerAlphaWebsite.Services;
 
 namespace ServerAlphaWebsite.Pages
 {
@@ -24,7 +23,6 @@ namespace ServerAlphaWebsite.Pages
         private bool finishButtonClicked = false;
 
         [Inject] IJSRuntime JS { get; set; } = default!;
-        [Inject] StageValidationService StageValidationService { get; set; } = default!;
 
         private void SubscribeToImageGeneratedEvent()
         {

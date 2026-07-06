@@ -5,7 +5,6 @@ using ServerAlphaWebsite.DB;
 using ServerAlphaWebsite.GameStages.AnsweringStage;
 using ServerAlphaWebsite.Models.DTOs;
 using ServerAlphaWebsite.PythonEngines;
-using ServerAlphaWebsite.Services;
 
 namespace ServerAlphaWebsite.Pages
 {
@@ -26,7 +25,6 @@ namespace ServerAlphaWebsite.Pages
         // --- Injected Properties ---
 
         [Inject] private IJSRuntime JS { get; set; } = default!;
-        [Inject] private StageValidationService StageValidationService { get; set; } = default!;
 
         public Solution()
         {

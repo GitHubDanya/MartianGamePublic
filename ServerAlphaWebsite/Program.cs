@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using ServerAlphaWebsite.ServerStorage;
-using ServerAlphaWebsite.Services;
 using ServerAlphaWebsite.Endpoints;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -23,7 +22,6 @@ builder.Services.AddCascadingAuthenticationState();
 
 builder.Services.AddSingleton<UserInfoStorage>();
 builder.Services.AddScoped<CultureService>();
-builder.Services.AddScoped<StageValidationService>();
 builder.Services.AddScoped<NavigationHistoryService>();
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddLocalization();
