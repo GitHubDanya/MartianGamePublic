@@ -19,4 +19,9 @@ published March 22nd, 2026, which can be found [here (Cohen et al., 2026)](https
 
 ### Installation
 
-To read the installation guide, download and run the installation_guide/installation.html file in your browser.
+To read the installation guide, download and run the installation_guide/instructions.html file in your browser.
+
+### Modifying the game
+
+If you're planning to modify the game, It is strongly encouraged to first familiarize yourself with it's architecture. A detailed overview
+of it can be found in the project-overview/overview.html file.
