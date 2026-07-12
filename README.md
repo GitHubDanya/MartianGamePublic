@@ -15,13 +15,3 @@ It aids to the study of question asking and supports the hypothesis that complex
 
 This tool has been used by researchers from the Technion University of Technology, and a paper encompassing it's credibility has been
 published March 22nd, 2026, which can be found [here (Cohen et al., 2026)](https://cognitive-complexity.net.technion.ac.il/files/2026/02/Cohen-Rafner-Sherson-Kenett-2026.pdf). 
-
-
-### Installation
-
-To read the installation guide, download and run the installation_guide/instructions.html file in your browser.
-
-### Modifying the game
-
-If you're planning to modify the game, It is strongly encouraged to first familiarize yourself with it's architecture. A detailed overview
-of it can be found in the project-overview/overview.html file.
